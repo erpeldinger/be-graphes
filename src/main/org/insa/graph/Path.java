@@ -42,7 +42,7 @@ public class Path {
         	return new Path(graph, nodes.get(0));
         }
         
-        double temps = Double.POSITIVE_INFINITY;
+        double temps = 9999999;
         Arc bonarc = nodes.get(0).getSuccessors().get(0);
         for (int i =0 ; i<nodes.size() - 1 ; i++) {
         	if (!graph.getNodes().contains(nodes.get(i))) { /* si node pas dans le graphe */
@@ -58,14 +58,14 @@ public class Path {
         			temps = iter.getMinimumTravelTime();
         			bonarc = iter;
         			lien = true;
-        		}
-        		}
-        		if (lien == false) {
-            		throw new IllegalArgumentException("nodes pas lies");
+        			}
         		}
         	}
-        	    arcs.add(bonarc);
-        	    temps = Double.POSITIVE_INFINITY;
+    		if (lien == false) {
+        		throw new IllegalArgumentException("nodes pas lies");
+    		}
+    		arcs.add(bonarc);
+    	    temps = 99999999;
         }
         return new Path(graph, arcs);
     }
