@@ -39,10 +39,21 @@ public class Label {
 		return this.cout;
 	}
 	
+	public int setCost(int cout) {
+		this.cout = cout;
+		return this.cout;
+	}
+	
+	
 	public boolean marked() {
 		return this.marque;
 	}
 
+	public boolean setMark() {
+		this.marque = true ;
+		return this.marque;
+	}
+	
 	public Node getSommet() {
 		return this.sommetCourant;
 	}
