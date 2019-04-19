@@ -24,14 +24,15 @@ public class LabelList {
 		while (!trouve && i <this.size) {
 			if (this.labels.get(i).getSommet() == node) {
 				trouve = true;
-				Result = new Label(this.labels.get(i).getSommet(), this.labels.get(i).marked(),
-							  this.labels.get(i).getCost(), this.labels.get(i).getPere());
+				Result = this.labels.get(i);
 				
 			}
 			i++;
 		}
 		return Result;
 	}
+	
+	public ArrayList<Label> getLabels() { return this.labels; }
 	
 }
 

@@ -1,5 +1,7 @@
 package org.insa.algo.shortestpath;
-import org.insa.algo.utils.BinaryHeap;
+import org.insa.algo.AbstractSolution.Status;
+import org.insa.algo.utils.*;
+import java.util.*;
 import org.insa.graph.*;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
@@ -12,82 +14,96 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     protected ShortestPathSolution doRun() {
         ShortestPathData data = getInputData();
         ShortestPathSolution solution = null;
-        Graph graph = data.getGraph();
-        int tailleGraphe = graph.size();
         
-        boolean toutMarque = false;
-        boolean fin = false;
-        
-        /*A initialiser*/
-        Label labelSuccesseur;
-        Label labelCourant;
-        LabelList liste;
-        
-        //Tas de labels
+        //Initialisation
+        ArrayList<Label> listeLabel = new ArrayList<Label>();
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
-               
-        
-        //Tant qu'il existe des sommets non marqués
-        while(/*!tas.isEmpty() && !fin*/) {
-        	labelCourant = tas.findMin();
-        	labelCourant.setMark();
-        	//this.liste.add(labelCourant);
-        
-	        //On parcoure les successeurs y de x
-	        for (Node courant : graph.getNodes()) {
-	        	labelCourant = liste.recupLabel(courant);
-	        	
-	        	//Si le successeur n'est pas encore marqué
-	        	if(!labelSuccesseur.marked()) {
-	        	
-	        		//Là j'ai mis getCost mais il faudrait plutôt calculer un getTotalCost
-	        		if(labelSuccesseur.getCost() > labelCourant.getCost() /*+ W(x,y)*/) {
-	        			labelSuccesseur.setCost(labelCourant.getCost() /* + W(x,y)*/);
-	        		
-	        			// Si le successeur est déjà dans le tas, on met à jour sa position
-	        			if(labelSuccesseur./*A compléter*/) {
-	        				tas.remove(labelSuccesseur);
-	        			}
-	        			//Si le successeur n'est pas dans le tas, on l'ajoute
-	        			else {
-	        				tas.insert(labelSuccesseur);
-	        			}  
-	        		}
-	        	
-	        	}
-	        	        	
-	        }
-        }	
-        	
-       /* 
-      //Tant qu'il existe des sommets non marqués
-
-        for (Node courant : graph.getNodes()) {
-        	labelCourant = liste.recupLabel(courant);
-
+        for (Node courantNode : this.data.getGraph().getNodes()) {
+        	listeLabel.add(new Label(courantNode));
+        	if (courantNode.equals(data.getOrigin())) {
+        		listeLabel.get(listeLabel.size() - 1).setCost(0);
+        		tas.insert(listeLabel.get(listeLabel.size() - 1 ));
+        	}
         }
-    
-        	
-        	//ArrayList <> x = labelCourant.
-        	//.marque = true;
         
-	        for(tous les successeurs) {
-
-	        	if(! Label.marked()) {
-	        		if(coutY > coutX + w) {
-	        			coutY = coutX + w;
-	        			
-	        			if(existYTas) {
-	        				updateYTas;
-	        			}
-	        			
-	        			else {
-	        				insertYTas;
-	        			}
-	        		}	        		
+        Label labelCourant, labelSuccesseur = null;
+        
+        //Tant qu'il existe des sommets non marques
+        while(!tas.isEmpty()) {
+        	labelCourant = tas.findMin();
+        	tas.remove(labelCourant);
+        	labelCourant.setMark();
+        
+	        //On parcourt les successeurs y de x
+	        for (Arc arcCourant : labelCourant.getSommet().getSuccessors()) {
+                // Small test to check allowed roads...
+                if (!data.isAllowed(arcCourant)) {
+                    continue;
+                }
+	        	for (Label l : listeLabel) {
+		        	//Si le successeur n'est pas encore marque
+		        	if(l.getSommet().equals(arcCourant.getDestination())) {
+		        		labelSuccesseur = l;
+		        		break;
+		        	}
 	        	}
-	        }    
-	        */    
+	        	if (labelSuccesseur.marked() == false) {
+	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
+	        			labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
+	        			labelSuccesseur.setPere(arcCourant);
+	        			
+			        	//on insere un label s'il n'Ã©tait pas deja dans la liste
+			        	try {
+			        		tas.remove(labelSuccesseur);
+			        	}
+			        	catch (ElementNotFoundException e){
+			        	}
+						tas.insert(labelSuccesseur);
+						//System.out.println(labelSuccesseur);
+			        	}
+	        	}
+        	}
+	        	        	
+    	}
+        
+        //Reconstitution de la solution
+        ArrayList<Node> solutionNode = new ArrayList<Node>();
+        Label labelDestination=null, labelOrigine = null;
+        // on recupere le bon label (bonne origine et destination)
+        for (Label l : listeLabel) {
+        	if (l.getSommet().equals(data.getOrigin())) {
+        		labelOrigine = l;
+        	}
+        	if (l.getSommet().equals(data.getDestination())) {
+        		labelDestination = l;
+        	}
+        }
+        
+        Label aux = labelDestination;
+        
+        while (!aux.equals(labelOrigine)) {
+        	if (aux.getPere().equals(null)) {
+        		solution = new ShortestPathSolution(data, Status.INFEASIBLE);
+        		return solution;
+        	}
+        	solutionNode.add(aux.getSommet());
+        	// on cherche le label associÃ© au noeud pere
+        	for (Label l : listeLabel) {
+        		if (l.getSommet().equals(aux.getPere().getOrigin())) {
+        			aux = l;
+        			break;
+        		}
+        	}
+        }
+        
+        solutionNode.add(labelOrigine.getSommet());
+        
+        // Reverse the path...
+        Collections.reverse(solutionNode);
+        
+        // Create the final solution.
+        Path p = Path.createShortestPathFromNodes(this.data.getGraph(), solutionNode);
+        solution = new ShortestPathSolution(data, Status.OPTIMAL, p);
         
         return solution;
     }

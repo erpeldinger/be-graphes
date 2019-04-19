@@ -1,9 +1,6 @@
 package org.insa.graph;
 
-import java.util.List;
-import org.insa.algo.utils.BinaryHeap;
-
-public class Label {
+public class Label implements Comparable <Label> {
 
 	//Sommet associé à ce label == lien avec un noeud
 	private Node sommetCourant;
@@ -17,22 +14,13 @@ public class Label {
 	//sommet précédent sur le chemin correspondant au plus court chemin 
 	private Arc arcPere;
 	
-	
-	
-	//Constructeur si le sommet est marqué
-	public Label(Node sc, boolean m, int c, Arc p) {
-		this.sommetCourant = sc;
-		this.marque = m;
-		this.cout = c;
-		this.arcPere = p;
-	}
 
 	//Constructeur si le sommet n'est pas marqué, le met à false par défaut
-	public Label(Node sc, int c, Arc p) {
+	public Label(Node sc) {
 		this.sommetCourant = sc;
 		this.marque = false;
-		this.cout = c;
-		this.arcPere = p;
+		this.cout = Integer.MAX_VALUE;
+		this.arcPere = null;
 	}
 	//Méthode
 	public int getCost() {
@@ -61,5 +49,18 @@ public class Label {
 	public Arc getPere() {
 		return this.arcPere;
 	}
+	
+	public void setPere(Arc p) {
+		this.arcPere = p;
+	}
+
+	public int compareTo(Label x) {
+		return Double.compare(this.cout, x.getCost());
+	}
+
+	public boolean equals(Label x) {
+		return this.sommetCourant.equals(x.getSommet());
+	}
+	
 }
 
