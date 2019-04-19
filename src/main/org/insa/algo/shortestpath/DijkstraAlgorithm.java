@@ -23,6 +23,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	if (courantNode.equals(data.getOrigin())) {
         		listeLabel.get(listeLabel.size() - 1).setCost(0);
         		tas.insert(listeLabel.get(listeLabel.size() - 1 ));
+        		
+
+        		
+        		//Je ne sais pas si c'est au bon endroit
+        		// Notifie les observateurs du départ de l'origine
+        		notifyOriginProcessed(data.getOrigin());
+        		
+        		
+        		
         	}
         }
         
@@ -32,6 +41,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         while(!tas.isEmpty()) {
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
+        	
+        	
+        	
+        	
+        	
+        	// On indique que le Node a été marqué
+			notifyNodeMarked(current.getNode());
+			
+			
+			
+			
         	labelCourant.setMark();
         
 	        //On parcourt les successeurs y de x
@@ -46,6 +66,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		        		labelSuccesseur = l;
 		        		break;
 		        	}
+		        
+		        	
+		        	
+	        /**		//Je crois qu'il faut ajuter un if
+	        		// On indique que l'on atteint un Node pour la première fois
+					notifyNodeReached(arcIter.getDestination()); 
+			*/
+					
+		        	
+		        	
+		        	
 	        	}
 	        	if (labelSuccesseur.marked() == false) {
 	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
@@ -73,7 +104,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         for (Label l : listeLabel) {
         	if (l.getSommet().equals(data.getOrigin())) {
         		labelOrigine = l;
+        		
         	}
+     
         	if (l.getSommet().equals(data.getDestination())) {
         		labelDestination = l;
         	}
@@ -83,6 +116,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         while (!aux.equals(labelOrigine)) {
         	if (aux.getPere().equals(null)) {
+				
         		solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         		return solution;
         	}
@@ -100,6 +134,16 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         // Reverse the path...
         Collections.reverse(solutionNode);
+        
+        
+        
+        
+        //Je ne suis pas sûre de l'endroit
+        // The destination has been found, notify the observers.
+        notifyDestinationReached(data.getDestination());
+        
+        
+        
         
         // Create the final solution.
         Path p = Path.createShortestPathFromNodes(this.data.getGraph(), solutionNode);
