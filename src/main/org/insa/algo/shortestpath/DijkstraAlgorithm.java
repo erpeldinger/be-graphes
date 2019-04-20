@@ -15,6 +15,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         ShortestPathData data = getInputData();
         ShortestPathSolution solution = null;
         
+        int nb_iter = 0;
+        
         //Initialisation
         ArrayList<Label> listeLabel = new ArrayList<Label>();
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
@@ -35,6 +37,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
         	labelCourant.setMark();
+        	nb_iter++;
+        	
+        	//Affichage temporaire du coût des labels marqués
+        	System.out.println("Noeud marqué, " + labelCourant.toString()+"\n");
         	
         	// On indique que le Node a été marqué
 			notifyNodeMarked(labelCourant.getSommet());
@@ -69,8 +75,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 						//System.out.println(labelSuccesseur);
 			        	}
 	        	}
-        	}
-	        	        	
+        	}	        	        	
     	}
         
         //Reconstitution de la solution
@@ -79,10 +84,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         // on recupere le bon label (bonne origine et destination)
         for (Label l : listeLabel) {
         	if (l.getSommet().equals(data.getOrigin())) {
-        		labelOrigine = l;
-        		
-        	}
-     
+        		labelOrigine = l;        		
+        	}     
         	if (l.getSommet().equals(data.getDestination())) {
         		labelDestination = l;
         	}
@@ -115,7 +118,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         // Create the final solution.
         Path p = Path.createShortestPathFromNodes(this.data.getGraph(), solutionNode);
-        solution = new ShortestPathSolution(data, Status.OPTIMAL, p);        
+        solution = new ShortestPathSolution(data, Status.OPTIMAL, p);  
+        
+        //Affiche des infos sur le plus court chemin
+        System.out.println("Infos du plus court chemin : "+ solution.toString()+"\n");
+        System.out.println("Nb itérations Dijkstra : "+ nb_iter+"\n");        
         
         return solution;
     }

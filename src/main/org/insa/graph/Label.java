@@ -53,6 +53,11 @@ public class Label implements Comparable <Label> {
 	public void setPere(Arc p) {
 		this.arcPere = p;
 	}
+	
+	public String toString(){
+		return "Sommet n° "+this.sommetCourant+" Cout: "+this.cout;
+		
+	}
 
 	public int compareTo(Label x) {
 		return Double.compare(this.cout, x.getCost());
