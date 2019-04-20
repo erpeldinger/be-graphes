@@ -23,36 +23,21 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	if (courantNode.equals(data.getOrigin())) {
         		listeLabel.get(listeLabel.size() - 1).setCost(0);
         		tas.insert(listeLabel.get(listeLabel.size() - 1 ));
-        		
-
-        		
-        		//Je ne sais pas si c'est au bon endroit
-        		// Notifie les observateurs du départ de l'origine
-        		notifyOriginProcessed(data.getOrigin());
-        		
-        		
-        		
         	}
         }
-        
+        //Je ne sais pas si c'est au bon endroit
+        // Notify observers about the first event (origin processed).
+        notifyOriginProcessed(data.getOrigin());
         Label labelCourant, labelSuccesseur = null;
         
         //Tant qu'il existe des sommets non marques
         while(!tas.isEmpty()) {
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
-        	
-        	
-        	
-        	
+        	labelCourant.setMark();
         	
         	// On indique que le Node a été marqué
-			notifyNodeMarked(current.getNode());
-			
-			
-			
-			
-        	labelCourant.setMark();
+			notifyNodeMarked(labelCourant.getSommet());
         
 	        //On parcourt les successeurs y de x
 	        for (Arc arcCourant : labelCourant.getSommet().getSuccessors()) {
@@ -64,19 +49,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		        	//Si le successeur n'est pas encore marque
 		        	if(l.getSommet().equals(arcCourant.getDestination())) {
 		        		labelSuccesseur = l;
+		        		// On indique que l'on atteint un Node pour la première fois
+		        		notifyNodeReached(arcCourant.getDestination()); 
 		        		break;
-		        	}
-		        
-		        	
-		        	
-	        /**		//Je crois qu'il faut ajuter un if
-	        		// On indique que l'on atteint un Node pour la première fois
-					notifyNodeReached(arcIter.getDestination()); 
-			*/
-					
-		        	
-		        	
-		        	
+		        	}		        	
 	        	}
 	        	if (labelSuccesseur.marked() == false) {
 	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
@@ -128,26 +104,18 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         			break;
         		}
         	}
-        }
-        
+        }        
         solutionNode.add(labelOrigine.getSommet());
         
-        // Reverse the path...
+        // Reverse the path
         Collections.reverse(solutionNode);
         
-        
-        
-        
-        //Je ne suis pas sûre de l'endroit
         // The destination has been found, notify the observers.
         notifyDestinationReached(data.getDestination());
         
-        
-        
-        
         // Create the final solution.
         Path p = Path.createShortestPathFromNodes(this.data.getGraph(), solutionNode);
-        solution = new ShortestPathSolution(data, Status.OPTIMAL, p);
+        solution = new ShortestPathSolution(data, Status.OPTIMAL, p);        
         
         return solution;
     }
