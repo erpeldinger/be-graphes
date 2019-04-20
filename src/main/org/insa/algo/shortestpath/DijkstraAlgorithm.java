@@ -81,6 +81,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         //Reconstitution de la solution
         ArrayList<Node> solutionNode = new ArrayList<Node>();
         Label labelDestination=null, labelOrigine = null;
+        
         // on recupere le bon label (bonne origine et destination)
         for (Label l : listeLabel) {
         	if (l.getSommet().equals(data.getOrigin())) {
