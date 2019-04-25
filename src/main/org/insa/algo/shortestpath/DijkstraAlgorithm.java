@@ -40,7 +40,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	nb_iter++;
         	
         	//Affichage temporaire du coût des labels marqués
-        	System.out.println("Noeud marqué, " + labelCourant.toString()+"\n");
+        	//System.out.println("Noeud marqué, " + labelCourant.toString()+"\n");
         	
         	// On indique que le Node a été marqué
 			notifyNodeMarked(labelCourant.getSommet());
@@ -122,8 +122,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         solution = new ShortestPathSolution(data, Status.OPTIMAL, p);  
         
         //Affiche des infos sur le plus court chemin
-        System.out.println("Infos du plus court chemin : "+ solution.toString()+"\n");
-        System.out.println("Nb itérations Dijkstra : "+ nb_iter+"\n");        
+        //System.out.println("Infos du plus court chemin : "+ solution.toString()+"\n");
+        //System.out.println("Nb itérations Dijkstra : "+ nb_iter+"\n");        
         
         return solution;
     }

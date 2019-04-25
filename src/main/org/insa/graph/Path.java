@@ -42,7 +42,7 @@ public class Path {
         	return new Path(graph, nodes.get(0));
         }
         
-        double temps = 9999999;
+        double temps = Double.MAX_VALUE;
         Arc bonarc = nodes.get(0).getSuccessors().get(0);
         for (int i =0 ; i<nodes.size() - 1 ; i++) {
         	if (!graph.getNodes().contains(nodes.get(i))) { /* si node pas dans le graphe */
@@ -65,7 +65,7 @@ public class Path {
         		throw new IllegalArgumentException("nodes pas lies");
     		}
     		arcs.add(bonarc);
-    	    temps = 99999999;
+    	    temps = Double.MAX_VALUE;
         }
         return new Path(graph, arcs);
     }
@@ -96,7 +96,7 @@ public class Path {
         	return new Path(graph, nodes.get(0));
         }
         
-        float longueur = 999999999;
+        float longueur = Float.MAX_VALUE;
         Arc bonarc;
         boolean lien = false;
         for (int i =0 ; i<nodes.size()-1 ; i++) {
@@ -120,7 +120,7 @@ public class Path {
         		}
         	}
         	arcs.add(bonarc);
-        	longueur = 999999999;
+        	longueur = Float.MAX_VALUE;
         }
         return new Path(graph, arcs);
     }

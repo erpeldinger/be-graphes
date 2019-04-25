@@ -65,7 +65,7 @@ public class DijkstraTest {
     @Test
     public void testDoRun() {
     	
-    	//-------------- Test comparatif des algo Bellman-Ford et Dijkstra ---------------------------- 
+    	//-------------- 1.2 Test comparatif des algo Bellman-Ford et Dijkstra ---------------------------- 
     	System.out.println("/-------------- 1.2 - Tests de validité avec oracle sur un exemple simple --------------/"+"\n");
     	
     	//On affiche les points de départ (colonnes)
@@ -117,14 +117,93 @@ public class DijkstraTest {
     			}    			
     		}
     		// Retour à la ligne
-			System.out.println();
+			//System.out.println();
     	}
     	// Retour à la ligne 
-		System.out.println();
+		//System.out.println();
     }
     
-    //---------------------------- Scénarios ------------------------------
+    //---------------------------- 1.3 Test des scénarios avec oracle ------------------------------------------------------
     
-
+    public void testDoScenarioDistance() throws Exception {
+    	
+		System.out.println("/-------------- Tests de scénarios en distance --------------/"+"\n");
+		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/belgium.mapgr";
+	
+		System.out.println("Carte : Belgique\n");
+		System.out.println("Mode : distance\n");
+		
+		DijkstraScenarioTest test = new  DijkstraScenarioTest();
+		int ori, dest;
+		int mode = 1;
+		
+		System.out.println("----- Cas : chemin avec origine = destination -----");
+		ori = 0;
+		dest = 0;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		System.out.println("----- Cas : sommet origine inexistant -----");
+		ori = -1;
+		dest = 0;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		System.out.println("-----  Cas : sommet destination inexistant -----");
+		ori = 0;
+		dest = -1;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		System.out.println("----- Cas : sommets origine et destination inexistants -----");
+		ori = -1;
+		dest = -1;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		
+		System.out.println("----- Cas : chemin existant -----");
+		ori = 2;
+		dest = 53;		
+		test.testScenario(carte, mode, ori, dest);
+				
+	}
+	
+	public void testDoScenarioTemps() throws Exception {
+    	
+		System.out.println("/-------------- Tests de scénarios en temps --------------/"+"\n");
+		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/belgium.mapgr";
+	
+		System.out.println("Carte : Belgique\n");
+		System.out.println("Mode : distance\n");
+		
+		DijkstraScenarioTest test = new  DijkstraScenarioTest();
+		int ori, dest;
+		int mode = 0;
+		
+		System.out.println("----- Cas : chemin avec origine = destination -----");
+		ori = 0;
+		dest = 0;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		System.out.println("----- Cas : sommet origine inexistant -----");
+		ori = -1;
+		dest = 0;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		System.out.println("-----  Cas : sommet destination inexistant -----");
+		ori = 0;
+		dest = -1;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		System.out.println("----- Cas : sommets origine et destination inexistants -----");
+		ori = -1;
+		dest = -1;		
+		test.testScenario(carte, mode, ori, dest);
+		
+		
+		System.out.println("----- Cas : chemin existant -----");
+		ori = 2;
+		dest = 53;		
+		test.testScenario(carte, mode, ori, dest);
+				
+	}
+	
 
 }
