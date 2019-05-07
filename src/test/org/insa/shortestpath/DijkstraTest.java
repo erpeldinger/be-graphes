@@ -42,6 +42,8 @@ public class DijkstraTest {
         for (int i = 0; i < nodes.length; ++i) {
             nodes[i] = new Node(i, null);
         }
+        
+        //ATTENTION CE GRAPHE EST CELUI DE L'EXEMPLE QUI A ETE SUPPRIME, CE N'EST PAS LE MEME QUE DANS PATHTEST
 
         // Add arcs        
         a2b = Node.linkNodes(nodes[0], nodes[1], 7, infoRoute, null);

@@ -1,7 +1,34 @@
 package org.insa.graph;
 
-public class Label implements Comparable <Label> {
+import org.insa.algo.shortestpath.ShortestPathData;
+import org.insa.algo.*;
 
+public class LabelStar extends Label implements Comparable<Label> {
+	
+	public int borneInf;
+	
+	public LabelStar(Node sc, int borneInf, ShortestPathData data) {
+		super(sc);
+		
+		if(data.getMode() == AbstractInputData.Mode.LENGTH) {
+			this.borneInf = (int)sc.getPoint().distanceTo(data.getDestination().getPoint());			
+		}
+		else {
+			//VÈrifier les histoires de vitesses du graphe et de la data
+			int vitesseMax = data.getMaximumSpeed() ;
+			int vitesseChemin = Math.max(vitesseMax, data.getGraph().getGraphInformation().getMaximumSpeed());
+			//VÈrifier les unitÈs
+			this.borneInf = (int)sc.getPoint().distanceTo(data.getDestination().getPoint()) / vitesseChemin;
+		}
+	}
+		
+	
+	public int getTotalCost() {
+		return this.borneInf + this.cout;
+	}
+
+	/**
+	
 	//Sommet associ√© √† ce label == lien avec un noeud
 	private Node sommetCourant;
 
@@ -9,14 +36,14 @@ public class Label implements Comparable <Label> {
 	private boolean marque ;
 	
 	//Valeur courante du plus court chemin depuis l'origine vers le sommet.
-	protected int cout;
+	private int cout;
 	
 	//sommet pr√©c√©dent sur le chemin correspondant au plus court chemin 
 	private Arc arcPere;
 	
 
 	//Constructeur si le sommet n'est pas marqu√©, le met √† false par d√©faut
-	public Label(Node sc) {
+	public LabelStar(Node sc) {
 		this.sommetCourant = sc;
 		this.marque = false;
 		this.cout = Integer.MAX_VALUE;
@@ -29,10 +56,6 @@ public class Label implements Comparable <Label> {
 	
 	public int setCost(int cout) {
 		this.cout = cout;
-		return this.cout;
-	}
-	
-	public int getTotalCost() {
 		return this.cout;
 	}
 	
@@ -63,28 +86,13 @@ public class Label implements Comparable <Label> {
 		
 	}
 
-	//Compare les co˚ts totaux de deux labels, renvoit -1 si <; 0 si =; 1 si >
-	public int compareTo(Label l) {
-		
-		int comp;
-		
-		if (this.getTotalCost() < l.getCost()) {
-			comp = -1;
-		}
-		
-		else if (this.getTotalCost() == l.getCost()) {
-			comp = 0;
-		}
-		
-		else {
-			comp = 1;
-		}			
-		return comp;
+	public int compareTo(LabelStar x) {
+		return Double.compare(this.cout, x.getCost());
 	}
 
-	public boolean equals(Label x) {
+	public boolean equals(LabelStar x) {
 		return this.sommetCourant.equals(x.getSommet());
 	}
-	
+	*/
 }
 
