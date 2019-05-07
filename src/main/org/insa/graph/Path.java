@@ -115,10 +115,10 @@ public class Path {
         				bonarc = iter;
         			}
         		}
-        		if (lien == false) {
-            		throw new IllegalArgumentException("nodes pas lies");
-        		}
         	}
+    		if (lien == false) {
+        		throw new IllegalArgumentException("nodes pas lies");
+    		}
         	arcs.add(bonarc);
         	longueur = Float.MAX_VALUE;
         }

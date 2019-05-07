@@ -11,7 +11,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     }
 
     @Override
-    protected ShortestPathSolution doRun() {
+    public ShortestPathSolution doRun() {
         ShortestPathData data = getInputData();
         ShortestPathSolution solution = null;
         
@@ -114,6 +114,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         // Create the final solution.
         Path p = Path.createShortestPathFromNodes(this.data.getGraph(), solutionNode);
+        
+        
         solution = new ShortestPathSolution(data, Status.OPTIMAL, p);
         
         return solution;
