@@ -62,9 +62,12 @@ public class DijkstraTest {
  
     }
 
+    /**
     @Test
     public void testDoRun() {
-    	
+    
+     	TEST CORRESPONDANT A L'EXEMPLE AVEC LE TABLEAU (SUPPRIME)
+     * 
     	//-------------- 1.2 Test comparatif des algo Bellman-Ford et Dijkstra ---------------------------- 
     	System.out.println("/-------------- 1.2 - Tests de validité avec oracle sur un exemple simple --------------/"+"\n");
     	
@@ -121,9 +124,9 @@ public class DijkstraTest {
     	}
     	// Retour à la ligne 
 		//System.out.println();
-    }
+    } */
     
-    //---------------------------- 1.3 Test des scénarios avec oracle ------------------------------------------------------
+    //---------------------------- 2.1 Test des scénarios avec oracle ------------------------------------------------------
     
     public void testDoScenarioDistance() throws Exception {
     	
@@ -205,5 +208,11 @@ public class DijkstraTest {
 				
 	}
 	
-
+	//---------------------------- 2.2 Test des scénarios sans oracle ------------------------------------------------------
+	
+	public void testSansOracle() throws Exception {
+	
+	}
+	
+	
 }
