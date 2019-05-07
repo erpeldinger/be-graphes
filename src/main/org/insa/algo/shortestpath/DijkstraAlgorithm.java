@@ -27,12 +27,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         }
         
         Label labelCourant, labelSuccesseur = null;
-        
+        int iter = 0;
+        int nbarc = 0;
+        int successeurTestes=  0;
         //Tant qu'il existe des sommets non marques
         while(!tas.isEmpty()) {
+        	successeurTestes = 0;
+        	iter++;
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
         	labelCourant.setMark();
+        	//System.out.println("label " + labelCourant.getCost()); // COUT CROISSANT OK
         
 	        //On parcourt les successeurs y de x
 	        for (Arc arcCourant : labelCourant.getSommet().getSuccessors()) {
@@ -47,6 +52,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		        		break;
 		        	}
 	        	}
+	        	successeurTestes++;
 	        	if (labelSuccesseur.marked() == false) {
 	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
 	        			labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
@@ -59,12 +65,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			        	catch (ElementNotFoundException e){
 			        	}
 						tas.insert(labelSuccesseur);
-						//System.out.println(labelSuccesseur);
+						nbarc++;
+						System.out.println("label successeur " + labelSuccesseur);
 			        	}
 	        	}
         	}
-	        	        	
-    	}
+	        //System.out.println("nb successeurs testes à l'iteration " + iter + " : " + successeurTestes); //DE 1 A 4 TESTS a chaque iter
+	        //System.out.println("taille du tas " + tas.size()); // ENVIRON 3 3 4 3 4 4 5 5 4 5 6 6 .... ~croisant jusqu'à 47 puis décroissant
+        }
+		// System.out.println("nb iter : " + iter);  // NB ITERATIONS : 1164
+        //System.out.println("nb arcs " + nbarc);    // NB ARCS : 1262
+        // TESTE SUR LA CARTE INSA : 1349 NODES ET 2887 ARCS
         
         //Reconstitution de la solution
         ArrayList<Node> solutionNode = new ArrayList<Node>();
