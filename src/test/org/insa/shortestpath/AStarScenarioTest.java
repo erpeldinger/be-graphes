@@ -28,7 +28,7 @@ import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class DijkstraScenarioTest {
+public class AStarScenarioTest {
 
    @Test
    
@@ -37,8 +37,7 @@ public class DijkstraScenarioTest {
 
 	   // Create a graph reader
 	   GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(carte))));
-	      
-	   
+	   	   
 	   // Read the graph.
 	   Graph graph;	
 	   
@@ -67,6 +66,7 @@ public class DijkstraScenarioTest {
 				   
 				   //Evaluation en distance (voiture)
 				   else {
+					   //get0 ou get1 ?
 					   arc = ArcInspectorFactory.getAllFilters().get(1);				   
 					   System.out.print("Type = distance \n");
 				   }
@@ -86,32 +86,34 @@ public class DijkstraScenarioTest {
 			   //A voir ?????????????????
 			   ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(dest), arc);
 				
-			   BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
+			   //a modifier
+			   AStarAlgorithm A = new AStarAlgorithm(data);
 			   DijkstraAlgorithm D = new DijkstraAlgorithm(data);
 			 		   
 			   //On récupère les solutions obtenues avec Dijkstra et Bellman-Ford
+			   ShortestPathSolution solutionAStar = A.run();
 			   ShortestPathSolution solutionDijkstra = D.run();
-			   ShortestPathSolution solutionBF = B.run();
-			   		   
+			   
+			   double costAStar;		   
 			   double costDijkstra;
-			   double costBF;		   
+			   		   
 			   
 			   //Si le chemin est inexistant
-			   if(solutionDijkstra.getPath() == null) {
-				  assertEquals(solutionBF.getPath(), solutionDijkstra.getPath());
+			   if(solutionAStar.getPath() == null) {
+				  assertEquals(solutionDijkstra.getPath(), solutionAStar.getPath());
 				  System.out.println("Pas de chemin possible\n"); 
 			   }
 			   
 			   //Si le chemin existe
 			   else {
 				   if(type == 0) {		
+					   costAStar = solutionAStar.getPath().getMinimumTravelTime();
 					   costDijkstra = solutionDijkstra.getPath().getMinimumTravelTime();
-					   costBF = solutionBF.getPath().getMinimumTravelTime();
 				   }
 				   
 				   else {
+					   costAStar = solutionAStar.getPath().getLength();
 					   costDijkstra = solutionDijkstra.getPath().getLength();
-					   costBF = solutionBF.getPath().getLength();
 				   }
 				   System.out.println("Coût trajet : " + costDijkstra);
 				   // ??? assertEquals(costBF, costDijkstra, 1e6);

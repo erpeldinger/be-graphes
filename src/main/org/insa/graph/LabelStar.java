@@ -7,7 +7,7 @@ public class LabelStar extends Label implements Comparable<Label> {
 	
 	public int borneInf;
 	
-	public LabelStar(Node sc, int borneInf, ShortestPathData data) {
+	public LabelStar(Node sc, ShortestPathData data) {
 		super(sc);
 		
 		if(data.getMode() == AbstractInputData.Mode.LENGTH) {

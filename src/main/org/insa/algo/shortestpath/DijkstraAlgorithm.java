@@ -9,7 +9,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
     }
-
+    
+    //Cette méthode permet de créer un Label associé à un Node
+    protected Label creerLabel(Node sc, ShortestPathData data) {
+		return new LabelStar(sc, data);
+	}
+    
     @Override
     public ShortestPathSolution doRun() {
         ShortestPathData data = getInputData();
@@ -46,9 +51,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                     continue;
                 }
 	        	for (Label l : listeLabel) {
-		        	//Si le successeur n'est pas encore marque
+		        	//Si le successeur n'est pas encore marqué
 		        	if(l.getSommet().equals(arcCourant.getDestination())) {
-		        		labelSuccesseur = l;
+		        		//Modif : labelSuccesseur = l;
+		        		labelSuccesseur = creerLabel(l.getSommet(), data);
 		        		break;
 		        	}
 	        	}
@@ -83,10 +89,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         // on recupere le bon label (bonne origine et destination)
         for (Label l : listeLabel) {
         	if (l.getSommet().equals(data.getOrigin())) {
-        		labelOrigine = l;
+        		//meme modif que l56
+        		labelOrigine = creerLabel(l.getSommet(), data);
         	}
         	if (l.getSommet().equals(data.getDestination())) {
-        		labelDestination = l;
+        		//idem
+        		labelDestination = creerLabel(l.getSommet(), data);
         	}
         }
         
