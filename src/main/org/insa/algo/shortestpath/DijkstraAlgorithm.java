@@ -10,9 +10,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         super(data);
     }
     
-    //Cette méthode permet de créer un Label associé à un Node
+    //Cette mï¿½thode permet de crï¿½er un Label associï¿½ ï¿½ un Node
     protected Label creerLabel(Node sc, ShortestPathData data) {
-		return new LabelStar(sc, data);
+		return new Label(sc);
+	}
+
+    //Cette mï¿½thode permet de crï¿½er un Label null
+    protected Label creerLabel () {
+    	Label result = null;
+		return result;
 	}
     
     @Override
@@ -24,21 +30,23 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         ArrayList<Label> listeLabel = new ArrayList<Label>();
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
         for (Node courantNode : this.data.getGraph().getNodes()) {
-        	listeLabel.add(new Label(courantNode));
+        	listeLabel.add(creerLabel(courantNode, data));
+        	//listeLabel.add(new Label(courantNode));
         	if (courantNode.equals(data.getOrigin())) {
         		listeLabel.get(listeLabel.size() - 1).setCost(0);
         		tas.insert(listeLabel.get(listeLabel.size() - 1 ));
         	}
         }
-        
-        Label labelCourant, labelSuccesseur = null;
-        int iter = 0;
-        int nbarc = 0;
-        int successeurTestes=  0;
+        //Label labelCourant, labelSuccesseur = null;
+        Label labelCourant = creerLabel();
+        Label labelSuccesseur = creerLabel();
+        //int iter = 0;
+        //int nbarc = 0;
+        //int successeurTestes=  0;
         //Tant qu'il existe des sommets non marques
         while(!tas.isEmpty()) {
-        	successeurTestes = 0;
-        	iter++;
+        	//successeurTestes = 0;
+        	//iter++;
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
         	labelCourant.setMark();
@@ -51,14 +59,14 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                     continue;
                 }
 	        	for (Label l : listeLabel) {
-		        	//Si le successeur n'est pas encore marqué
+		        	//Si le successeur n'est pas encore marquï¿½
 		        	if(l.getSommet().equals(arcCourant.getDestination())) {
-		        		//Modif : labelSuccesseur = l;
-		        		labelSuccesseur = creerLabel(l.getSommet(), data);
+		        		labelSuccesseur = l;
+		        		//labelSuccesseur = creerLabel(l.getSommet(), data);
 		        		break;
 		        	}
 	        	}
-	        	successeurTestes++;
+	        	//successeurTestes++;
 	        	if (labelSuccesseur.marked() == false) {
 	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
 	        			labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
@@ -71,14 +79,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			        	catch (ElementNotFoundException e){
 			        	}
 						tas.insert(labelSuccesseur);
-						nbarc++;
-						System.out.println("label successeur " + labelSuccesseur);
+						//nbarc++;
+						//System.out.println("label successeur " + labelSuccesseur);
 			        	}
 	        	}
         	}
 	        //System.out.println("nb successeurs testes Ã  l'iteration " + iter + " : " + successeurTestes); //DE 1 A 4 TESTS a chaque iter
 	        //System.out.println("taille du tas " + tas.size()); // ENVIRON 3 3 4 3 4 4 5 5 4 5 6 6 .... ~croisant jusqu'Ã  47 puis dÃ©croissant
         }
+        
 		// System.out.println("nb iter : " + iter);  // NB ITERATIONS : 1164
         //System.out.println("nb arcs " + nbarc);    // NB ARCS : 1262
         // TESTE SUR LA CARTE INSA : 1349 NODES ET 2887 ARCS
@@ -90,11 +99,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         for (Label l : listeLabel) {
         	if (l.getSommet().equals(data.getOrigin())) {
         		//meme modif que l56
-        		labelOrigine = creerLabel(l.getSommet(), data);
+        		labelOrigine = l;
+        		//labelOrigine = creerLabel(l.getSommet(), data);
         	}
         	if (l.getSommet().equals(data.getDestination())) {
         		//idem
-        		labelDestination = creerLabel(l.getSommet(), data);
+        		labelDestination = l;
+        		//labelDestination = creerLabel(l.getSommet(), data);
         	}
         }
         

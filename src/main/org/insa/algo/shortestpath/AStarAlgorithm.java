@@ -18,12 +18,18 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
         super(data);
     }    
     
-    //A corriger, dans DijkstraAlgo il faudrait créer cette méthode comment ç on a juste à la redéfinir ici pour ne pas réécrire tout l'algo
-    //Ou alors on copie/colle tout comme ça et on modifie "extends ShortestPathAlgorithm : 
+    //A corriger, dans DijkstraAlgo il faudrait crï¿½er cette mï¿½thode comment ï¿½ on a juste ï¿½ la redï¿½finir ici pour ne pas rï¿½ï¿½crire tout l'algo
+    //Ou alors on copie/colle tout comme ï¿½a et on modifie "extends ShortestPathAlgorithm : 
     
     @Override
-    protected Label creerLabel(Node sc, ShortestPathData data) {
+    protected LabelStar creerLabel(Node sc, ShortestPathData data) {
 		return new LabelStar(sc, data);
 	}
+
+    protected LabelStar creerLabel () {
+    	LabelStar result = null;
+		return result;
+	}
+    
 }
 

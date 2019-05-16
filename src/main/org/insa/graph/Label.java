@@ -33,7 +33,7 @@ public class Label implements Comparable <Label> {
 	}
 	
 	public int getTotalCost() {
-		return this.cout;
+		return this.cout; //pour l'ordre des sommets dans le tas
 	}
 	
 	
@@ -59,27 +59,13 @@ public class Label implements Comparable <Label> {
 	}
 	
 	public String toString(){
-		return "Sommet n° "+this.sommetCourant+" Cout: "+this.cout;
+		return "Sommet nï¿½ "+this.sommetCourant+" Cout: "+this.cout;
 		
 	}
 
-	//Compare les coûts totaux de deux labels, renvoit -1 si <; 0 si =; 1 si >
+	//Compare les coï¿½ts totaux de deux labels, renvoit -1 si <; 0 si =; 1 si >
 	public int compareTo(Label l) {
-		
-		int comp;
-		
-		if (this.getTotalCost() < l.getCost()) {
-			comp = -1;
-		}
-		
-		else if (this.getTotalCost() == l.getCost()) {
-			comp = 0;
-		}
-		
-		else {
-			comp = 1;
-		}			
-		return comp;
+		return Double.compare(this.cout, l.getCost());
 	}
 
 	public boolean equals(Label x) {

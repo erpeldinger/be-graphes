@@ -5,26 +5,52 @@ import org.insa.algo.*;
 
 public class LabelStar extends Label implements Comparable<Label> {
 	
-	public int borneInf;
+	protected int borneInf;
 	
 	public LabelStar(Node sc, ShortestPathData data) {
 		super(sc);
 		
-		if(data.getMode() == AbstractInputData.Mode.LENGTH) {
+		if(data.getMode() == AbstractInputData.Mode.LENGTH) { // shortest path (distance)
 			this.borneInf = (int)sc.getPoint().distanceTo(data.getDestination().getPoint());			
 		}
-		else {
-			//Vérifier les histoires de vitesses du graphe et de la data
-			int vitesseMax = data.getMaximumSpeed() ;
-			int vitesseChemin = Math.max(vitesseMax, data.getGraph().getGraphInformation().getMaximumSpeed());
-			//Vérifier les unités
-			this.borneInf = (int)sc.getPoint().distanceTo(data.getDestination().getPoint()) / vitesseChemin;
+		else { // fastest path (temps)
+			//Vï¿½rifier les histoires de vitesses du graphe et de la data
+			int vitesseArc = data.getMaximumSpeed() ;
+			int vitesseGraph = Math.max(vitesseArc, data.getGraph().getGraphInformation().getMaximumSpeed());
+			//Vï¿½rifier les unitï¿½s
+			this.borneInf = (int)sc.getPoint().distanceTo(data.getDestination().getPoint()) / vitesseGraph;
 		}
 	}
-		
+	
+	public int getBorne() { return this.borneInf; }
 	
 	public int getTotalCost() {
-		return this.borneInf + this.cout;
+		return this.borneInf + this.cout; //pour l'ordre des sommets dans le tas
+	}
+	public int compareTo(LabelStar l) {
+		
+		int comp;
+		
+		if (this.getTotalCost() < l.getTotalCost()) {
+			comp = -1;
+		}
+		
+		else if (this.getTotalCost() == l.getTotalCost()) {
+			if (this.getBorne() < l.getBorne()) {
+				comp = -1 ;
+			}
+			else if (this.getBorne() > l.getBorne()) {
+				comp = 1;
+			}
+			else {
+				comp = 0;
+			}
+		}
+		
+		else {
+			comp = 1;
+		}			
+		return comp;
 	}
 
 	/**
@@ -82,7 +108,7 @@ public class LabelStar extends Label implements Comparable<Label> {
 	}
 	
 	public String toString(){
-		return "Sommet n° "+this.sommetCourant+" Cout: "+this.cout;
+		return "Sommet nï¿½ "+this.sommetCourant+" Cout: "+this.cout;
 		
 	}
 
