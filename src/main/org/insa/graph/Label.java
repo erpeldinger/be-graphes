@@ -9,7 +9,7 @@ public class Label implements Comparable <Label> {
 	private boolean marque ;
 	
 	//Valeur courante du plus court chemin depuis l'origine vers le sommet.
-	protected int cout;
+	protected double cout;
 	
 	//sommet précédent sur le chemin correspondant au plus court chemin 
 	private Arc arcPere;
@@ -23,16 +23,16 @@ public class Label implements Comparable <Label> {
 		this.arcPere = null;
 	}
 	//Méthode
-	public int getCost() {
+	public double getCost() {
 		return this.cout;
 	}
 	
-	public int setCost(int cout) {
+	public double setCost(double cout) {
 		this.cout = cout;
 		return this.cout;
 	}
 	
-	public int getTotalCost() {
+	public double getTotalCost() {
 		return this.cout; //pour l'ordre des sommets dans le tas
 	}
 	
