@@ -58,14 +58,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                 if (!data.isAllowed(arcCourant)) {
                     continue;
                 }
-	        	for (Label l : listeLabel) {
-		        	//Si le successeur n'est pas encore marqu�
-		        	if(l.getSommet().equals(arcCourant.getDestination())) {
-		        		labelSuccesseur = l;
-		        		//labelSuccesseur = creerLabel(l.getSommet(), data);
-		        		break;
-		        	}
-	        	}
+                
+                labelSuccesseur = listeLabel.get(arcCourant.getDestination().getId());
+		        	
 	        	//successeurTestes++;
 	        	if (labelSuccesseur.marked() == false) {
 	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
