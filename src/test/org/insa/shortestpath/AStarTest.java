@@ -19,7 +19,7 @@ import org.junit.Test;
 
 public class AStarTest {
 
-	/**
+	
     // Small graph use for tests
     private static Graph graph;
 
@@ -66,6 +66,8 @@ public class AStarTest {
         graph = new Graph("ID", "", Arrays.asList(nodes), null);
  
     }
+    
+    /*
     //---------------------------- 1.3 CaractÃ©ristiques des solutions obtenues -----------------
     
     
@@ -224,12 +226,13 @@ public class AStarTest {
     } */
 
     
-    //---------------------------- 2.1 Test des scénarios avec oracle ------------------------------------------------------
+    //---------------------------- 2.1 Test des scï¿½narios avec oracle ------------------------------------------------------
     
+	@Test 
     public void testDoScenarioDistance() throws Exception {
     	
-		System.out.println("/-------------- Tests de scénarios en distance (AStar) --------------/"+"\n");
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/belgium.mapgr";
+		System.out.println("/-------------- Tests de scï¿½narios en distance (AStar) --------------/"+"\n");
+		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
 	
 		System.out.println("Carte : Belgique\n");
 		System.out.println("Mode : distance\n");
@@ -265,11 +268,12 @@ public class AStarTest {
 		test.testScenario(carte, mode, ori, dest);
 				
 	}
-	
+
+	@Test 
 	public void testDoScenarioTemps() throws Exception {
     	
-		System.out.println("/-------------- Tests de scénarios en temps (AStar) --------------/"+"\n");
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/belgium.mapgr";
+		System.out.println("/-------------- Tests de scï¿½narios en temps (AStar) --------------/"+"\n");
+		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
 	
 		System.out.println("Carte : Belgique\n");
 		System.out.println("Mode : distance\n");

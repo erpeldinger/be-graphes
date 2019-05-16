@@ -33,7 +33,6 @@ public class DijkstraTest {
    
     
     @BeforeClass
-    
     public static void initAll() throws IOException {
     	
         // 10 and 20 meters per seconds
@@ -157,6 +156,10 @@ public class DijkstraTest {
 	    validite = path3.isValid();
 	    System.out.println("chemin 4 (3) est " + validite);
 	    
+
+		System.out.println("fin test validite");
+
+	    
     }
     /**
     @Test
@@ -223,11 +226,12 @@ public class DijkstraTest {
     } */
     
     //---------------------------- 2.1 Test des sc�narios avec oracle ------------------------------------------------------
-    
+
+    @Test
     public void testDoScenarioDistance() throws Exception {
     	
 		System.out.println("/-------------- Tests de sc�narios en distance --------------/"+"\n");
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/belgium.mapgr";
+		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
 	
 		System.out.println("Carte : Belgique\n");
 		System.out.println("Mode : distance\n");
@@ -261,13 +265,17 @@ public class DijkstraTest {
 		ori = 2;
 		dest = 53;		
 		test.testScenario(carte, mode, ori, dest);
+		
+
 				
 	}
 	
+
+    @Test
 	public void testDoScenarioTemps() throws Exception {
     	
 		System.out.println("/-------------- Tests de sc�narios en temps --------------/"+"\n");
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/belgium.mapgr";
+		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
 	
 		System.out.println("Carte : Belgique\n");
 		System.out.println("Mode : distance\n");
@@ -304,11 +312,6 @@ public class DijkstraTest {
 				
 	}
 	
-	//---------------------------- 2.2 Test des sc�narios sans oracle ------------------------------------------------------
-	
-	public void testSansOracle() throws Exception {
-	
-	}
 	
 	
 }
