@@ -269,46 +269,4 @@ public class AStarTest {
 		test.testScenario(carte, mode, ori, dest);
 				
 	}
-
-	@Test 
-	public void testDoScenarioTemps() throws Exception {
-    	
-		System.out.println("/-------------- Tests de sc�narios en temps (AStar) --------------/"+"\n");
-		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
-	
-		System.out.println("Carte : Fractal\n");
-		System.out.println("Mode : distance\n");
-		
-		AStarScenarioTest test = new AStarScenarioTest();
-		int ori, dest;
-		int mode = 0;
-		
-		System.out.println("----- Cas : chemin avec origine = destination -----");
-		ori = 0;
-		dest = 0;		
-		test.testScenario(carte, mode, ori, dest);
-		
-		System.out.println("----- Cas : sommet origine inexistant -----");
-		ori = -1;
-		dest = 0;		
-		test.testScenario(carte, mode, ori, dest);
-		
-		System.out.println("-----  Cas : sommet destination inexistant -----");
-		ori = 0;
-		dest = -1;		
-		test.testScenario(carte, mode, ori, dest);
-		
-		System.out.println("----- Cas : sommets origine et destination inexistants -----");
-		ori = -1;
-		dest = -1;		
-		test.testScenario(carte, mode, ori, dest);
-		
-		
-		System.out.println("----- Cas : chemin existant -----");
-		ori = 2;
-		dest = 53;		
-		test.testScenario(carte, mode, ori, dest);
-				
-	}	
 }

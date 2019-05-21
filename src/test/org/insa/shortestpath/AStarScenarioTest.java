@@ -33,6 +33,7 @@ public class AStarScenarioTest {
    @Test
    
    // Type correspond au type d'�valuation. On choisit 0 pour le temps, 1 pour la distance
+   // Remarque : A* ne se fait qu'en distance et pas en temps.
    public void testScenario (String carte, int type, int origine, int dest) throws Exception {
 
 	   // Create a graph reader
@@ -103,7 +104,7 @@ public class AStarScenarioTest {
 				   //Si le chemin existe
 				   else {
 					   if(type == 0) {		
-						   costAStar = solutionAStar.getPath().getMinimumTravelTime();
+						   
 						   costDijkstra = solutionDijkstra.getPath().getMinimumTravelTime();
 					   }
 					   
