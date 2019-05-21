@@ -13,13 +13,13 @@ public class LabelStar extends Label implements Comparable<Label> {
 		if(data.getMode() == AbstractInputData.Mode.LENGTH) { // shortest path (distance)
 			this.borneInf = sc.getPoint().distanceTo(data.getDestination().getPoint());			
 		}
-		else { // fastest path (temps)
+		/**else { // fastest path (temps)
 			//V�rifier les histoires de vitesses du graphe et de la data
 			double vitesseArc = data.getMaximumSpeed() ;
 			double vitesseGraph = Math.max(vitesseArc, data.getGraph().getGraphInformation().getMaximumSpeed());
 			//V�rifier les unit�s
 			this.borneInf = sc.getPoint().distanceTo(data.getDestination().getPoint()) / vitesseGraph;
-		}
+		}*/
 	}
 	
 	public double getBorne() { return this.borneInf; }

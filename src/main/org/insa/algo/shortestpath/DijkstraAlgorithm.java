@@ -27,17 +27,26 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         ShortestPathSolution solution = null;
         
         //Initialisation
+        int indexDest = 0, iter = 0;
         ArrayList<Label> listeLabel = new ArrayList<Label>();
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
         for (Node courantNode : this.data.getGraph().getNodes()) {
         	listeLabel.add(creerLabel(courantNode, data));
-        	//listeLabel.add(new Label(courantNode));
+        	//listeLabel.add(new Label(courantNode));*
+        	
+        	//On récupère l'index du label du noeud de destination
+        	if(listeLabel.get(iter).getSommet() == data.getDestination()) {
+        		indexDest = iter;
+        	}
+        	iter++;
+        	
         	if (courantNode.equals(data.getOrigin())) {
         		listeLabel.get(listeLabel.size() - 1).setCost(0);
         		tas.insert(listeLabel.get(listeLabel.size() - 1 ));
         	}
         }
         //Label labelCourant, labelSuccesseur = null;
+        Label labelDest = listeLabel.get(indexDest);
         Label labelCourant = creerLabel();
         Label labelSuccesseur = creerLabel();
         //int iter = 0;
@@ -48,7 +57,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         notifyOriginProcessed(data.getOrigin());        
         
         //Tant qu'il existe des sommets non marques
-        while(!tas.isEmpty()) {
+        while(!tas.isEmpty() && !(labelDest.marked())) {
         	//successeurTestes = 0;
         	//iter++;
         	labelCourant = tas.findMin();
@@ -70,8 +79,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 	        	//successeurTestes++;
                 
 	        	if (labelSuccesseur.marked() == false) {
-	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
-	        			labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
+	        		if (labelSuccesseur.getTotalCost() > labelCourant.getTotalCost() + arcCourant.getLength()) {
+	        			labelSuccesseur.setCost(labelCourant.getTotalCost() + (int)arcCourant.getLength());
 	        			labelSuccesseur.setPere(arcCourant);
 	        			
 			        	//on insere un label s'il n'Ã©tait pas deja dans la liste

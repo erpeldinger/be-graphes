@@ -68,7 +68,7 @@ public class Lecture {
 			while(sc.hasNextInt()) {
 				origine = sc.nextInt();
 				this.listeOrigines.add(origine);
-				if() {}
+				//if() {}
 			}
 			
 			sc.close();
