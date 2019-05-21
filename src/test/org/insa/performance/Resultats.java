@@ -7,6 +7,6 @@ package org.insa.performance;
 */
 
 
-public class Ecriture {
+public class Resultats {
 
 }

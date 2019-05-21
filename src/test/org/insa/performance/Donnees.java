@@ -4,7 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
+
+import org.insa.algo.shortestpath.ShortestPathData;
+import org.insa.graph.Graph;
 
 /** 
  * 
@@ -15,7 +19,7 @@ import java.util.Scanner;
 	
 //Automatiser lecture des fichiers .mapgr ?
 
-public class Lecture {
+public class Donnees {
 	
 
 	/** 
@@ -23,10 +27,10 @@ public class Lecture {
 	 */
 
 	protected String nomCarte;
-	protected ArrayList<Integer> listeOrigines;
-	protected ArrayList<Integer> listeDest ;
-	
-	protected static final int nbPaires = 100;
+	ShortestPathData data = getInputData();	
+	Graph graph;	
+	   
+	protected static final int nbPaires = 125;
 	public static final String[] dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps", 
 			"C:/Users/clariDocuments/3MIC/S2/graphes/Maps"};
 	
@@ -37,8 +41,6 @@ public class Lecture {
 	protected static final String[] cartes = {"fractal.mapgr", "midi-pyrenees.mapgr", "new-zealand.mapgr"};
 	
 	public Lecture(String nomCarte) {
-		this.listeOrigines = new ArrayList<Integer>();
-		this.listeDest = new ArrayList<Integer>();
 		this.LectureFichier(nomCarte);
 		
 	}
@@ -58,20 +60,39 @@ public class Lecture {
 	public void LectureFichier(String nomCarte) {
 		
 		try {
-			Scanner sc = new Scanner(new File(nomCarte));
+			//BufferWriter pour écrire, Scanner pour récupérer données
+			/**Scanner sc = new Scanner(new File(nomCarte));*/
+			int origine, dest;		
+			Random rand = new Random();
+			int sizeTab = data.getGraph().getNodes().size();
 			
-			int origine, dest;
+			
+		
+			for (int i =0 ; i<nbPaires; i++) {
+				origine = rand.nextInt(nbPaires);
+				dest = rand.nextInt(nbPaires);
+				
+				//on écrit dans le fichier
+				//Carte
+				//type
+				//nb paires
+				//paires
+
+			}
+			
+			//On prend 125 tests, on en veut 100, comme ça on a une marge pour les tests. 
+			//C'est pdt les tests qu'on supprimera les chemins impossibles
 			
 			//Vérifier que chemin entre 2 sommets existe
 			
 			//On récupère les id des sommets de la carte
-			while(sc.hasNextInt()) {
+			/**while(sc.hasNextInt()) {
 				origine = sc.nextInt();
 				this.listeOrigines.add(origine);
 				//if() {}
-			}
+			}*/
 			
-			sc.close();
+			//sc.close();
 		}
 		
 		catch(Exception e) {
