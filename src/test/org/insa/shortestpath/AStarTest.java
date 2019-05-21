@@ -232,9 +232,10 @@ public class AStarTest {
     public void testDoScenarioDistance() throws Exception {
     	
 		System.out.println("/-------------- Tests de sc�narios en distance (AStar) --------------/"+"\n");
-		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
+		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
+		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
 	
-		System.out.println("Carte : Belgique\n");
+		System.out.println("Carte : Fractal\n");
 		System.out.println("Mode : distance\n");
 		
 		AStarScenarioTest test = new AStarScenarioTest();
@@ -273,9 +274,10 @@ public class AStarTest {
 	public void testDoScenarioTemps() throws Exception {
     	
 		System.out.println("/-------------- Tests de sc�narios en temps (AStar) --------------/"+"\n");
-		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
+		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
+		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
 	
-		System.out.println("Carte : Belgique\n");
+		System.out.println("Carte : Fractal\n");
 		System.out.println("Mode : distance\n");
 		
 		AStarScenarioTest test = new AStarScenarioTest();

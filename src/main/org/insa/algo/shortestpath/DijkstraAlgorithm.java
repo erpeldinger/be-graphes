@@ -43,6 +43,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         //int iter = 0;
         //int nbarc = 0;
         //int successeurTestes=  0;
+        
+        //Notifie les observateurs du départ de l'origine
+        notifyOriginProcessed(data.getOrigin());        
+        
         //Tant qu'il existe des sommets non marques
         while(!tas.isEmpty()) {
         	//successeurTestes = 0;
@@ -50,6 +54,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
         	labelCourant.setMark();
+        	//Notifie les observateurs que le sommet courant a été marqué
+        	//)notifyNodeMarked(labelCourant.getSommet());
         	//System.out.println("label " + labelCourant.getCost()); // COUT CROISSANT OK
         
 	        //On parcourt les successeurs y de x
@@ -60,8 +66,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                 }
                 
                 labelSuccesseur = listeLabel.get(arcCourant.getDestination().getId());
-		        	
+		        
 	        	//successeurTestes++;
+                
 	        	if (labelSuccesseur.marked() == false) {
 	        		if (labelSuccesseur.getCost() > labelCourant.getCost() + arcCourant.getLength()) {
 	        			labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
@@ -74,7 +81,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			        	catch (ElementNotFoundException e){
 			        	}
 						tas.insert(labelSuccesseur);
-						//nbarc++;
+						//Notification aux obervateurs que l'on a atteint un noeud pour la première fois
+		                notifyNodeReached(labelSuccesseur.getSommet());
+		                //nbarc++;
 						//System.out.println("label successeur " + labelSuccesseur);
 			        	}
 	        	}
@@ -86,6 +95,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		// System.out.println("nb iter : " + iter);  // NB ITERATIONS : 1164
         //System.out.println("nb arcs " + nbarc);    // NB ARCS : 1262
         // TESTE SUR LA CARTE INSA : 1349 NODES ET 2887 ARCS
+        
+        //Notification de la destination
+        notifyDestinationReached(data.getDestination());
         
         //Reconstitution de la solution
         ArrayList<Node> solutionNode = new ArrayList<Node>();

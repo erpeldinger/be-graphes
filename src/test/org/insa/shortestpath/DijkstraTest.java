@@ -231,9 +231,10 @@ public class DijkstraTest {
     public void testDoScenarioDistance() throws Exception {
     	
 		System.out.println("/-------------- Tests de sc�narios en distance --------------/"+"\n");
-		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
-	
-		System.out.println("Carte : Belgique\n");
+		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
+		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
+		
+		System.out.println("Carte : Fractal\n");
 		System.out.println("Mode : distance\n");
 		
 		DijkstraScenarioTest test = new  DijkstraScenarioTest();
@@ -275,9 +276,11 @@ public class DijkstraTest {
 	public void testDoScenarioTemps() throws Exception {
     	
 		System.out.println("/-------------- Tests de sc�narios en temps --------------/"+"\n");
-		String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
-	
-		System.out.println("Carte : Belgique\n");
+		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
+		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
+		
+		
+		System.out.println("Carte : Fractal\n");
 		System.out.println("Mode : distance\n");
 		
 		DijkstraScenarioTest test = new  DijkstraScenarioTest();
