@@ -2,36 +2,33 @@ package org.insa.performance;
 
 import org.insa.graph.* ;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
-
-import org.insa.algo.shortestpath.ShortestPathData;
 import org.insa.graph.Graph;
 
 /** 
  * 
- * Cette classe permet de lire les données d'une carte et de générer un 
- * fichier texte regroupant les données du graphe.
+ * Cette classe permet de récupérer les informations d'une carte pour en extraire
+ * les données et écrire ces informations dans un fichier texte.
  * 
  */ 
 	
 //Automatiser lecture des fichiers .mapgr ?
 
-public class Donnees {
+public class EcritureDonnees {
 	
 
 	/** 
 	 * Attributs
 	 */
 
-	protected String nomCarte;
-	//ShortestPathData data = getInputData();	
+	protected String nomFichier;	
+	protected ArrayList<Integer> listeOrigine;
+	protected ArrayList<Integer> listeDest;			
 	Graph graph;	
 	  
 	//On prend 125 tests, on en veut  environ 100, comme ça on a une marge pour les tests.
@@ -45,8 +42,11 @@ public class Donnees {
 	 */
 	protected static final String[] cartes = {"fractal.mapgr", "midi-pyrenees.mapgr", "new-zealand.mapgr"};
 	
-	public Donnees(String nomCarte, int type) {
-		this.CreationDonnees(nomCarte, type);		
+	public EcritureDonnees(String nomCarte, int type) {
+		this.EcritureFichier(nomCarte, type);		
+		this.listeOrigine = new ArrayList<Integer>();
+		this.listeDest = new ArrayList<Integer>();		
+		
 	}
 	
 	/** 
@@ -61,7 +61,9 @@ public class Donnees {
 	 * 
 	 * On veut pouvoir créer des paires de sommets aléatoirement.	 
 	 */
-	public void CreationDonnees(String nomCarte, int type) {		
+	public void EcritureFichier(String nomCarte, int type) {
+		
+		//long init = System.currentTimeMillis();
 		
 		if(!(type==0 || type==1)) {
 			   System.out.print("Type d'évalutation invalide \n");
@@ -69,26 +71,20 @@ public class Donnees {
 		
 		int pairesCreees =0;
 		int origine, dest;
-		
-		//ArrayList de Node ou <Integer ?
-		ArrayList<Integer> listeOrigine = new ArrayList<Integer>();
-		ArrayList<Integer> listeDest = new ArrayList<Integer>();		
 		Random rand = new Random();
 		Path chemin;
 		
 		List<Node> listeNode = graph.getNodes();
-		List<Node> nouveauChemin;
+		List<Node> nouveauChemin = new ArrayList<Node>();
 		
 		//CA VEUT DIRE QUOI ???
 		//Les tests doivent être reproductibles, vous pouvez initialiser de manière déterministe 
 		//l’utilisation d’un générateur aléatoire afin d’obtenir les mêmes jeux de données.
 		
-		//ESTIMATION DUREE CALCULS ??
-		
 		//on récupère les nodes, on regarde si peuvent créer chemins
 		for (int i=0; i<nbPaires ; i++) {
-			origine = rand.nextInt(pairesCreees);
-			dest = rand.nextInt(pairesCreees);
+			origine = rand.nextInt(graph.getNodes().size());
+			dest = rand.nextInt(graph.getNodes().size());
 			nouveauChemin.add(listeNode.get(origine));
 			nouveauChemin.add(listeNode.get(dest));
 			
@@ -102,41 +98,53 @@ public class Donnees {
 			}	
 			nouveauChemin.clear();
 		}
-				
-		if (type ==0) { //distance		
-			File file = new File(nomCarte+"_"+ nbPaires +"_distance_data.txt");
+		
+		if (type ==0) { //distance
+			nomFichier = nomCarte+"_"+ pairesCreees +"_distance_data.txt";			
 		}		
 		else { //temps
-			File file = new File(nomCarte+"_"+ nbPaires +"_temps_data.txt");			
+			nomFichier = nomCarte+"_"+ pairesCreees +"_temps_data.txt";			
 		}
-			
+		File file = new File(nomFichier);
 		// Crée le fichier s'il n'existe pas
-		if (!file.exists()) {
-			 file.createNewFile();
-		}
-		
-		FileWriter fw = new FileWriter(file);
-		BufferedWriter bw = new BufferedWriter(fw);
-		
-		//Ecrit le contenu
-		bw.write("nomCarte");
-		bw.newLine();
-		
-		bw.write(pairesCreees);			
-		
-		for (int i=0; i<pairesCreees ;i++) {			
-			bw.write(listeOrigine.get(i));
-			bw.write(" ");
-			bw.write(listeDest.get(i));
+		try {
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			//Ecrit le nom de la carte et le nombre de paires
+			bw.write("nomCarte");
+			bw.newLine();	
+			bw.write(type);
 			bw.newLine();
+			bw.write(pairesCreees);	
+			bw.newLine();
+			
+			//Ecrit les paires de sommets
+			for (int i=0; i<pairesCreees ;i++) {			
+				bw.write(listeOrigine.get(i));
+				bw.write(" ");
+				bw.write(listeDest.get(i));
+				bw.newLine();
+			}
+			
+			bw.close();	
 		}
-		
-		bw.close();	
+	
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	
+		//Calcule le temps d'exécution du CPU
+		//long calculCPU = System.currentTimeMillis()-init ;
 	}
 	
 	
-	public String getnomCarte() {
-		return this.nomCarte;
+	public String getnomFichier() {
+		return this.nomFichier;
 	}
 	
 }
