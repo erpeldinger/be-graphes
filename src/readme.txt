@@ -5,9 +5,7 @@ A corriger :
 - gestion de l'exception IOException dans DijkstraScenarioTest à vérifier
 
 
-DijkstraScenarioTest : 
-- l46 : arc = null ??
-- l47:  try/catch ??
+- J'ai interverti le type pour distance (0) et temps (1)
 
 
 Rq : Je n'ai fait que deux types de test (distance et temps) sur une seule carte mais on peut en faire plein d'autres !

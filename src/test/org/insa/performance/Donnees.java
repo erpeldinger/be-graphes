@@ -1,11 +1,15 @@
 package org.insa.performance;
 
+import org.insa.graph.* ;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
+import java.util.List;
 
 import org.insa.algo.shortestpath.ShortestPathData;
 import org.insa.graph.Graph;
@@ -27,22 +31,22 @@ public class Donnees {
 	 */
 
 	protected String nomCarte;
-	ShortestPathData data = getInputData();	
+	//ShortestPathData data = getInputData();	
 	Graph graph;	
-	   
+	  
+	//On prend 125 tests, on en veut  environ 100, comme ça on a une marge pour les tests.
 	protected static final int nbPaires = 125;
+	
 	public static final String[] dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps", 
 			"C:/Users/clariDocuments/3MIC/S2/graphes/Maps"};
 	
-
 	/** 
 	 * Constructeur
 	 */
 	protected static final String[] cartes = {"fractal.mapgr", "midi-pyrenees.mapgr", "new-zealand.mapgr"};
 	
-	public Lecture(String nomCarte) {
-		this.LectureFichier(nomCarte);
-		
+	public Donnees(String nomCarte, int type) {
+		this.CreationDonnees(nomCarte, type);		
 	}
 	
 	/** 
@@ -57,62 +61,82 @@ public class Donnees {
 	 * 
 	 * On veut pouvoir créer des paires de sommets aléatoirement.	 
 	 */
-	public void LectureFichier(String nomCarte) {
+	public void CreationDonnees(String nomCarte, int type) {		
 		
-		try {
-			//BufferWriter pour écrire, Scanner pour récupérer données
-			/**Scanner sc = new Scanner(new File(nomCarte));*/
-			int origine, dest;		
-			Random rand = new Random();
-			int sizeTab = data.getGraph().getNodes().size();
-			
-			
+		if(!(type==0 || type==1)) {
+			   System.out.print("Type d'évalutation invalide \n");
+		}		
 		
-			for (int i =0 ; i<nbPaires; i++) {
-				origine = rand.nextInt(nbPaires);
-				dest = rand.nextInt(nbPaires);
+		int pairesCreees =0;
+		int origine, dest;
+		
+		//ArrayList de Node ou <Integer ?
+		ArrayList<Integer> listeOrigine = new ArrayList<Integer>();
+		ArrayList<Integer> listeDest = new ArrayList<Integer>();		
+		Random rand = new Random();
+		Path chemin;
+		
+		List<Node> listeNode = graph.getNodes();
+		List<Node> nouveauChemin;
+		
+		//CA VEUT DIRE QUOI ???
+		//Les tests doivent être reproductibles, vous pouvez initialiser de manière déterministe 
+		//l’utilisation d’un générateur aléatoire afin d’obtenir les mêmes jeux de données.
+		
+		//ESTIMATION DUREE CALCULS ??
+		
+		//on récupère les nodes, on regarde si peuvent créer chemins
+		for (int i=0; i<nbPaires ; i++) {
+			origine = rand.nextInt(pairesCreees);
+			dest = rand.nextInt(pairesCreees);
+			nouveauChemin.add(listeNode.get(origine));
+			nouveauChemin.add(listeNode.get(dest));
+			
+			chemin = Path.createShortestPathFromNodes(graph, nouveauChemin);
+			
+			//Si le chemin existe, on ajoute les sommets à la liste
+			if (chemin.isValid()) {
+				listeOrigine.add(origine);
+				listeDest.add(dest);
+				pairesCreees++;
+			}	
+			nouveauChemin.clear();
+		}
 				
-				//on écrit dans le fichier
-				//Carte
-				//type
-				//nb paires
-				//paires
-
-			}
+		if (type ==0) { //distance		
+			File file = new File(nomCarte+"_"+ nbPaires +"_distance_data.txt");
+		}		
+		else { //temps
+			File file = new File(nomCarte+"_"+ nbPaires +"_temps_data.txt");			
+		}
 			
-			//On prend 125 tests, on en veut 100, comme ça on a une marge pour les tests. 
-			//C'est pdt les tests qu'on supprimera les chemins impossibles
-			
-			//Vérifier que chemin entre 2 sommets existe
-			
-			//On récupère les id des sommets de la carte
-			/**while(sc.hasNextInt()) {
-				origine = sc.nextInt();
-				this.listeOrigines.add(origine);
-				//if() {}
-			}*/
-			
-			//sc.close();
+		// Crée le fichier s'il n'existe pas
+		if (!file.exists()) {
+			 file.createNewFile();
 		}
 		
-		catch(Exception e) {
-			
-		} //FileNotFound
+		FileWriter fw = new FileWriter(file);
+		BufferedWriter bw = new BufferedWriter(fw);
 		
+		//Ecrit le contenu
+		bw.write("nomCarte");
+		bw.newLine();
 		
+		bw.write(pairesCreees);			
+		
+		for (int i=0; i<pairesCreees ;i++) {			
+			bw.write(listeOrigine.get(i));
+			bw.write(" ");
+			bw.write(listeDest.get(i));
+			bw.newLine();
+		}
+		
+		bw.close();	
 	}
 	
 	
 	public String getnomCarte() {
 		return this.nomCarte;
-	}
-
-	public ArrayList<Integer> getListeOrigines(){
-		return this.listeOrigines;
-	}
-
-	public ArrayList<Integer> getListeDest(){
-		return this.listeDest;
 	}
 	
 }

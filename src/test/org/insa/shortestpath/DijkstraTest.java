@@ -239,7 +239,7 @@ public class DijkstraTest {
 		
 		DijkstraScenarioTest test = new  DijkstraScenarioTest();
 		int ori, dest;
-		int mode = 1;
+		int mode = 0;
 		
 		System.out.println("----- Cas : chemin avec origine = destination -----");
 		ori = 0;
@@ -285,7 +285,7 @@ public class DijkstraTest {
 		
 		DijkstraScenarioTest test = new  DijkstraScenarioTest();
 		int ori, dest;
-		int mode = 0;
+		int mode = 1;
 		
 		System.out.println("----- Cas : chemin avec origine = destination -----");
 		ori = 0;

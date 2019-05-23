@@ -32,7 +32,7 @@ public class AStarScenarioTest {
 
    @Test
    
-   // Type correspond au type d'�valuation. On choisit 0 pour le temps, 1 pour la distance
+   // Type correspond au type d'�valuation. On choisit 1 pour le temps, 0 pour la distance
    // Remarque : A* ne se fait qu'en distance et pas en temps.
    public void testScenario (String carte, int type, int origine, int dest) throws Exception {
 
@@ -59,17 +59,17 @@ public class AStarScenarioTest {
 		   
 		   //Si tous les arguments sont valides
 		   else {
-			   //Evaluation en temps (voiture)
+			   //Evaluation en distance (voiture)
 			   if(type == 0) {
-				   arc = ArcInspectorFactory.getAllFilters().get(2);
-				   System.out.print("Type = temps \n");
+				   arc = ArcInspectorFactory.getAllFilters().get(0);
+				   System.out.print("Type = distance \n");
 			   }
 			   
-			   //Evaluation en distance (voiture)
+			   //Evaluation en temps (voiture)
 			   else {
 				   //get0 ou get1 ?
-				   arc = ArcInspectorFactory.getAllFilters().get(1);				   
-				   System.out.print("Type = distance \n");
+				   arc = ArcInspectorFactory.getAllFilters().get(2);				   
+				   System.out.print("Type = temps \n");
 			   }
 			   
 			   //Si l'origine et la destination sont les m�mes
@@ -80,14 +80,12 @@ public class AStarScenarioTest {
 			   }
 			   //Cr�ation des plus courts chemins
 			   else {
-				   //A voir ?????????????????
 				   ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(dest), arc);
 					
-				   //a modifier
 				   AStarAlgorithm A = new AStarAlgorithm(data);
 				   DijkstraAlgorithm D = new DijkstraAlgorithm(data);
 				 		   
-				   //On r�cup�re les solutions obtenues avec Dijkstra et Bellman-Ford
+				   //On r�cup�re les solutions obtenues avec Dijkstra et AStar
 				   ShortestPathSolution solutionAStar = A.run();
 				   ShortestPathSolution solutionDijkstra = D.run();
 				   
@@ -103,7 +101,7 @@ public class AStarScenarioTest {
 				   
 				   //Si le chemin existe
 				   else {
-					   if(type == 0) {		
+					   if(type == 1) {		
 						   
 						   costDijkstra = solutionDijkstra.getPath().getMinimumTravelTime();
 					   }
@@ -113,7 +111,6 @@ public class AStarScenarioTest {
 						   costDijkstra = solutionDijkstra.getPath().getLength();
 					   }
 					   System.out.println("Co�t trajet : " + costDijkstra);
-					   // ??? assertEquals(costBF, costDijkstra, 1e6);
 				   }
 			   }
 			   
@@ -124,7 +121,6 @@ public class AStarScenarioTest {
 	   }
 	   
 	   catch (Exception e) {
-	   //Ca disait de faire try catch sur le read() et �a m'a propos� �a comme traitement, � v�rifier
 	   e.printStackTrace();
 	   }	   
    }

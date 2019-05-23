@@ -34,7 +34,7 @@ public class DijkstraScenarioTest {
 
    @Test
    
-   // Type correspond au type d'�valuation. On choisit 0 pour le temps, 1 pour la distance
+   // Type correspond au type d'�valuation. On choisit 1 pour le temps, 0 pour la distance
    public void testScenario (String carte, int type, int origine, int dest) throws Exception, java.lang.ArrayIndexOutOfBoundsException {
 
 	   // Create a graph reader
@@ -60,16 +60,16 @@ public class DijkstraScenarioTest {
 		   
 		   //Si tous les arguments sont valides
 		   else {
-			   //Evaluation en temps (voiture)
+			   //Evaluation en distance (voiture)
 			   if(type == 0) {
-				   arc = ArcInspectorFactory.getAllFilters().get(2);
-				   System.out.print("Type = temps \n");
+				   arc = ArcInspectorFactory.getAllFilters().get(0);
+				   System.out.print("Type = distance \n");
 			   }
 			   
-			   //Evaluation en distance (voiture)
+			   //Evaluation en temps (voiture)
 			   else {
-				   arc = ArcInspectorFactory.getAllFilters().get(1);				   
-				   System.out.print("Type = distance \n");
+				   arc = ArcInspectorFactory.getAllFilters().get(2);				   
+				   System.out.print("Type = temps \n");
 			   }
 			   
 			   //Si l'origine et la destination sont les m�mes
@@ -100,7 +100,7 @@ public class DijkstraScenarioTest {
 				   
 				   //Si le chemin existe
 				   else {
-					   if(type == 0) {		
+					   if(type == 1) {		
 						   costDijkstra = solutionDijkstra.getPath().getMinimumTravelTime();
 						   costBF = solutionBF.getPath().getMinimumTravelTime();
 					   }
@@ -122,7 +122,6 @@ public class DijkstraScenarioTest {
 	   }
 	   
 	   catch (Exception e) {
-		   //Ca disait de faire try catch sur le read() et �a m'a propos� �a comme traitement, � v�rifier
 		   e.printStackTrace();
 	   }
    }
