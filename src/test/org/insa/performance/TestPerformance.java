@@ -9,7 +9,7 @@ import org.junit.Test;
  *
 */
 
-public class PerformanceTest {
+public class TestPerformance {
 
 	public void doRun() {
 		//Dans le doRun : nomFichierEcritureDonnees, nomFichierEcritureREsultats, typeEvaluation, algo
