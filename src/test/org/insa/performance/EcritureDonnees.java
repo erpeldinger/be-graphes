@@ -31,8 +31,7 @@ public class EcritureDonnees {
 	protected ArrayList<Integer> listeDest;			
 	Graph graph;	
 	  
-	//On prend 125 tests, on en veut  environ 100, comme ça on a une marge pour les tests.
-	protected static final int nbPaires = 125;
+	public static final int nbPaires = 100;
 	
 	public static final String[] dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps", 
 			"C:/Users/clariDocuments/3MIC/S2/graphes/Maps"};
@@ -69,7 +68,6 @@ public class EcritureDonnees {
 			   System.out.print("Type d'évalutation invalide \n");
 		}		
 		
-		int pairesCreees =0;
 		int origine, dest;
 		Random rand = new Random();
 		Path chemin;
@@ -94,16 +92,18 @@ public class EcritureDonnees {
 			if (chemin.isValid()) {
 				listeOrigine.add(origine);
 				listeDest.add(dest);
-				pairesCreees++;
-			}	
+			}
+			else {
+				i--;
+			}
 			nouveauChemin.clear();
 		}
 		
 		if (type ==0) { //distance
-			nomFichier = nomCarte+"_"+ pairesCreees +"_distance_data.txt";			
+			nomFichier = nomCarte+"_"+ nbPaires +"_distance_data.txt";			
 		}		
 		else { //temps
-			nomFichier = nomCarte+"_"+ pairesCreees +"_temps_data.txt";			
+			nomFichier = nomCarte+"_"+ nbPaires +"_temps_data.txt";			
 		}
 		File file = new File(nomFichier);
 		// Crée le fichier s'il n'existe pas
@@ -120,11 +120,11 @@ public class EcritureDonnees {
 			bw.newLine();	
 			bw.write(type);
 			bw.newLine();
-			bw.write(pairesCreees);	
+			bw.write(nbPaires);	
 			bw.newLine();
 			
 			//Ecrit les paires de sommets
-			for (int i=0; i<pairesCreees ;i++) {			
+			for (int i=0; i<nbPaires ;i++) {			
 				bw.write(listeOrigine.get(i));
 				bw.write(" ");
 				bw.write(listeDest.get(i));
