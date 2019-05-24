@@ -5,10 +5,25 @@ import java.util.*;
 import org.insa.graph.*;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
+	
+	protected int nbSommetsVisites;
+	protected int nbSommetsMarques;
+	protected int tailleMaxTas;
 
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
+        this.nbSommetsVisites = 0;
+        this.nbSommetsMarques = 0;
+        this.tailleMaxTas = 0;
     }
+    
+    //getter pour les tests de performances
+    public int getSomVisites() { return this.nbSommetsVisites; }
+
+    public int getSomMarques() { return this.nbSommetsMarques; }
+    
+    public int getTailleTas() { return this.tailleMaxTas; }
+    
     
     //Cette mï¿½thode permet de crï¿½er un Label associï¿½ ï¿½ un Node
     protected Label creerLabel(Node sc, ShortestPathData data) {
@@ -34,7 +49,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	listeLabel.add(creerLabel(courantNode, data));
         	//listeLabel.add(new Label(courantNode));*
         	
-        	//On récupère l'index du label du noeud de destination
+        	//On rï¿½cupï¿½re l'index du label du noeud de destination
         	if(listeLabel.get(iter).getSommet() == data.getDestination()) {
         		indexDest = iter;
         	}
@@ -53,7 +68,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         //int nbarc = 0;
         //int successeurTestes=  0;
         
-        //Notifie les observateurs du départ de l'origine
+        //Notifie les observateurs du dï¿½part de l'origine
         notifyOriginProcessed(data.getOrigin());        
         
         //Tant qu'il existe des sommets non marques
@@ -63,7 +78,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	labelCourant = tas.findMin();
         	tas.remove(labelCourant);
         	labelCourant.setMark();
-        	//Notifie les observateurs que le sommet courant a été marqué
+        	//sommets marques
+        	this.nbSommetsMarques+=1;
+        	
+        	//Notifie les observateurs que le sommet courant a ï¿½tï¿½ marquï¿½
         	//)notifyNodeMarked(labelCourant.getSommet());
         	//System.out.println("label " + labelCourant.getCost()); // COUT CROISSANT OK
         
@@ -90,7 +108,14 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			        	catch (ElementNotFoundException e){
 			        	}
 						tas.insert(labelSuccesseur);
-						//Notification aux obervateurs que l'on a atteint un noeud pour la première fois
+		        		// sommets visites
+		        		this.nbSommetsVisites+=1;
+		        		// taille max tas
+		        		if (tas.size() > tailleMaxTas) {
+		        			tailleMaxTas = tas.size();
+		        		}
+		        		
+						//Notification aux obervateurs que l'on a atteint un noeud pour la premiï¿½re fois
 		                notifyNodeReached(labelSuccesseur.getSommet());
 		                //nbarc++;
 						//System.out.println("label successeur " + labelSuccesseur);
@@ -152,6 +177,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         
         solution = new ShortestPathSolution(data, Status.OPTIMAL, p);
+        
         
         return solution;
     }

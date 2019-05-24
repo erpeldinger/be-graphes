@@ -26,7 +26,7 @@ public class EcritureDonnees {
 	 * Attributs
 	 */
 
-	protected String nomFichier;	
+	protected static String nomFichier;	
 	protected ArrayList<Integer> listeOrigine;
 	protected ArrayList<Integer> listeDest;			
 	Graph graph;	
@@ -47,6 +47,8 @@ public class EcritureDonnees {
 		this.listeDest = new ArrayList<Integer>();		
 		
 	}
+	
+	public static String getNomFichier() { return nomFichier;}
 	
 	/** 
 	 * M�thodes
