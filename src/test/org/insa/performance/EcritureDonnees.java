@@ -28,24 +28,18 @@ public class EcritureDonnees {
 
 	protected static String nomFichier;	
 	protected ArrayList<Integer> listeOrigine;
-	protected ArrayList<Integer> listeDest;			
-	Graph graph;	
+	protected ArrayList<Integer> listeDest;		
 	  
-	public static final int nbPaires = 100;
+	public static final int nbPaires = 10;
 	
-	public static final String[] dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps", 
-			"C:/Users/clariDocuments/3MIC/S2/graphes/Maps"};
-	
+
 	/** 
 	 * Constructeur
 	 */
-	public static final String[] cartes = {"fractal.mapgr", "midi-pyrenees.mapgr", "new-zealand.mapgr"};
-	
-	public EcritureDonnees(String nomCarte, int type) {
-		this.EcritureFichier(nomCarte, type);		
+	public EcritureDonnees(String nomCarte, int type, Graph graph) {
+		this.EcritureFichier(nomCarte, type, graph);		
 		this.listeOrigine = new ArrayList<Integer>();
 		this.listeDest = new ArrayList<Integer>();		
-		
 	}
 	
 	public static String getNomFichier() { return nomFichier;}
@@ -62,7 +56,7 @@ public class EcritureDonnees {
 	 * 
 	 * On veut pouvoir cr�er des paires de sommets al�atoirement.	 
 	 */
-	public void EcritureFichier(String nomCarte, int type) {
+	public void EcritureFichier(String nomCarte, int type, Graph graph) {
 		
 		//long init = System.currentTimeMillis();
 		

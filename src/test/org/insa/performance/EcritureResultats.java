@@ -79,7 +79,7 @@ public class EcritureResultats {
 	 */
 	
 	//LECTURE fichier donnees
-public void LectureFichier(String nomFichier) {
+	public void LectureFichier(String nomFichier) {
 		try {
 			Scanner sc = new Scanner(new File(nomFichier));
 			int origine, dest, type;
