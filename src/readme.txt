@@ -6,7 +6,10 @@ A corriger :
 
 
 - Vérifier tests JUnit sur AStr et Dijkstra --> erreurs
-- Penser à faire le calcul du CPU (actuellement dans EcritureDonnees mais ce n'est pas le bon endroit)
 - Penser à récupérr caractéristiques machine où on lance les tas (CPU)
+- Comparer solutions BF et Dijkstra
+- AStar en temps (Attention maximumSpeed pas toujours renseigné)
+- PB endroit création fichier
+- PB : on ne donne pas le chemin de la carte
 
 Rq : Je n'ai fait que deux types de test (distance et temps) sur une seule carte mais on peut en faire plein d'autres !
