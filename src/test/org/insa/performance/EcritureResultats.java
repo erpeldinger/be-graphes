@@ -44,8 +44,8 @@ public class EcritureResultats {
 	 * Constructeur
 	 */
 	
-	public EcritureResultats(String nomCarte, int type) {
-		this.EcritureCalculs(nomCarte, type);		
+	public EcritureResultats(String nomCarte, int type, int algo) {
+		this.EcritureCalculs(nomCarte, type, algo);		
 		this.listeOrigine = new ArrayList<Integer>();
 		this.listeDest = new ArrayList<Integer>();		
 		
@@ -85,9 +85,10 @@ public class EcritureResultats {
 		//QUESTION : est-ce qu'on cree un fichier texte ou autre pour traiter les données ?
 		
 		//QUESTION : combien cree-t-on de fichiers de resultats : 1 par trajet ou 1 par carte ?
+		for (int i=0; i<nbPaires; i++) {
+			nomFichier= nomCarte+"_"+ nomEval + nbPaires + nomAlgo + "_" +(i+1)+".txt";			
+		}
 		
-		nomFichier= nomCarte+"_"+ nomEval + pairesCrees + nomAlgo + ".txt";			
-	
 		File file = new File(nomFichier);
 		// Crée le fichier s'il n'existe pas
 		try {
@@ -103,13 +104,13 @@ public class EcritureResultats {
 			bw.newLine();	
 			bw.write(type);
 			bw.newLine();
-			bw.write(pairesCreees);	
+			bw.write(nbPaires);	
 			bw.newLine();
 			bw.write(nomAlgo);	
 			bw.newLine();
 			
 			//Ecrit les donnees sur les sommets
-			for (int i=0; i<pairesCreees ;i++) {
+			for (int i=0; i<nbPaires ;i++) {
 				//Ecrit les numeros des sommets
 				bw.write(listeOrigine.get(i));
 				bw.write(" ");
