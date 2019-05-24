@@ -12,7 +12,7 @@ import org.junit.Test;
 public class PerformanceTest {
 
 	public void doRun() {
-		
+		//Dans le doRun : nomFichierEcritureDonnees, nomFichierEcritureREsultats, typeEvaluation, algo
 	}
 	
 
