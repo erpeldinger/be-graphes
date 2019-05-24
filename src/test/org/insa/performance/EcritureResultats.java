@@ -149,6 +149,7 @@ public void LectureFichier(String nomFichier) {
 				bw.write(listeOrigine.get(i));
 				bw.write(";");
 				bw.write(listeDest.get(i));
+				bw.write(";");
 				
 				//Si c'est Dijsktra
 				
@@ -158,16 +159,20 @@ public void LectureFichier(String nomFichier) {
 
 				//valeur solution
 				bw.write();
+				bw.write(";");
 				
 				//temps cpu
 				bw.write();
+				bw.write(";");
 				
 				//nb sommets explorés
 
 				bw.write();
+				bw.write(";");
 				//nb sommets marqués
 
 				bw.write();
+				bw.write(";");
 				//taille max du tas
 				
 				
