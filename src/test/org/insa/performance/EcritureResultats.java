@@ -12,13 +12,13 @@ import org.insa.graph.Graph;
 
 /** 
  * 
- * Cette classe permet d'écrire dans un fichier texte??? les résultats des tests de performance.
+ * Cette classe permet d'ï¿½crire dans un fichier texte??? les rï¿½sultats des tests de performance.
  * 
- * Format des données : 
+ * Format des donnï¿½es : 
  * - nom de la carte
  * - nombre de paires de sommets
- * - algorithme utilisé
- * - "origine destination val_solution temps_cpu nb_explorés nbmarqués max tas"
+ * - algorithme utilisï¿½
+ * - "origine destination val_solution temps_cpu nb_explorï¿½s nbmarquï¿½s max tas"
  * 
  */ 
 
@@ -64,7 +64,7 @@ public class EcritureResultats {
 		
 		//Si le type et l'algo ne sont pa bons
 		if(!((type==0 || type==1) && (algo==0 || algo==1))) {
-			   System.out.print("Type d'évalutation etou d'algorithme invalides \n");
+			   System.out.print("Type d'ï¿½valutation etou d'algorithme invalides \n");
 		}	
 		
 		String nomAlgo, nomEval;
@@ -82,15 +82,15 @@ public class EcritureResultats {
 			nomAlgo = "aStar";
 		}
 		
-		//QUESTION : est-ce qu'on cree un fichier texte ou autre pour traiter les données ?
+		//QUESTION : est-ce qu'on cree un fichier texte ou autre pour traiter les donnï¿½es ?
 		
 		//QUESTION : combien cree-t-on de fichiers de resultats : 1 par trajet ou 1 par carte ?
-		for (int i=0; i<nbPaires; i++) {
-			nomFichier= nomCarte+"_"+ nomEval + nbPaires + nomAlgo + "_" +(i+1)+".txt";			
+		for (int i=0; i<EcritureDonnees.nbPaires; i++) {
+			nomFichier= nomCarte+"_"+ nomEval + EcritureDonnees.nbPaires + nomAlgo + "_" +(i+1)+".txt";			
 		}
 		
 		File file = new File(nomFichier);
-		// Crée le fichier s'il n'existe pas
+		// Crï¿½e le fichier s'il n'existe pas
 		try {
 			if (!file.exists()) {
 				file.createNewFile();
@@ -104,13 +104,13 @@ public class EcritureResultats {
 			bw.newLine();	
 			bw.write(type);
 			bw.newLine();
-			bw.write(nbPaires);	
+			bw.write(EcritureDonnees.nbPaires);	
 			bw.newLine();
 			bw.write(nomAlgo);	
 			bw.newLine();
 			
 			//Ecrit les donnees sur les sommets
-			for (int i=0; i<nbPaires ;i++) {
+			for (int i=0; i<EcritureDonnees.nbPaires ;i++) {
 				//Ecrit les numeros des sommets
 				bw.write(listeOrigine.get(i));
 				bw.write(" ");
@@ -151,10 +151,10 @@ public class EcritureResultats {
 		List<Node> nouveauChemin = new ArrayList<Node>();
 		
 		//CA VEUT DIRE QUOI ???
-		//Les tests doivent être reproductibles, vous pouvez initialiser de manière déterministe 
-		//l’utilisation d’un générateur aléatoire afin d’obtenir les mêmes jeux de données.
+		//Les tests doivent ï¿½tre reproductibles, vous pouvez initialiser de maniï¿½re dï¿½terministe 
+		//lï¿½utilisation dï¿½un gï¿½nï¿½rateur alï¿½atoire afin dï¿½obtenir les mï¿½mes jeux de donnï¿½es.
 		
-		//on récupère les nodes, on regarde si peuvent créer chemins
+		//on rï¿½cupï¿½re les nodes, on regarde si peuvent crï¿½er chemins
 		for (int i=0; i<nbPaires ; i++) {
 			origine = rand.nextInt(pairesCreees);
 			dest = rand.nextInt(pairesCreees);
@@ -163,7 +163,7 @@ public class EcritureResultats {
 			
 			chemin = Path.createShortestPathFromNodes(graph, nouveauChemin);
 			
-			//Si le chemin existe, on ajoute les sommets à la liste
+			//Si le chemin existe, on ajoute les sommets ï¿½ la liste
 			if (chemin.isValid()) {
 				listeOrigine.add(origine);
 				listeDest.add(dest);
@@ -172,7 +172,7 @@ public class EcritureResultats {
 			nouveauChemin.clear();
 		}
 		
-		//Calcule le temps d'exécution du CPU
+		//Calcule le temps d'exï¿½cution du CPU
 		long calculCPU = System.currentTimeMillis()-init ;
 	*/
 	}
