@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.List;
 import org.insa.graph.Graph;
 
@@ -60,6 +61,44 @@ public class EcritureResultats {
 	 * - algo 0 = Dijkstra
 	 * - algo 1 = AStar
 	 */
+	
+	//LECTURE fichier donnees
+public void LectureFichier(String nomFichier) {
+		String nomCarte = "";
+		try {
+			Scanner sc = new Scanner(new File(nomFichier));
+			int origine, dest, type;
+			//Recupere le nom de la carte
+			if (sc.hasNext()) {
+				nomCarte = sc.nextLine();				
+			}
+			//Recupere le type d'�valuation
+			if (sc.hasNextInt()) {
+				type = sc.nextInt();				
+			}
+			//Recupere les paires de sommets
+			while(sc.hasNextInt()) {
+				origine = sc.nextInt();
+				this.listeOrigine.add(origine);
+				//Si le nombre de sommets est correct
+				if (sc.hasNextInt()) {
+					dest = sc.nextInt();
+					this.listeDest.add(dest);
+				}
+				//Si le nombre de sommets est impair
+				//TRAITEMENT
+				//else{}
+			}
+			sc.close();
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	
+	// ECRITURE fichier resultat
 	public void EcritureCalculs(String nomCarte, int type, int algo) {
 		
 		//Si le type et l'algo ne sont pa bons
@@ -67,7 +106,7 @@ public class EcritureResultats {
 			   System.out.print("Type d'�valutation etou d'algorithme invalides \n");
 		}	
 		
-		String nomAlgo, nomEval;
+		String nomAlgo = "", nomEval="";
 
 		if (type == 0) { //distance
 			nomEval = "distance";
@@ -75,45 +114,40 @@ public class EcritureResultats {
 		else if (type == 1) {//temps
 			nomEval = "temps";
 		} 
-		else if(algo == 0) {
+		if(algo == 0) {
 			nomAlgo = "dijkstra";
 		}
 		else if(algo == 1) {
 			nomAlgo = "aStar";
 		}
 		
-		//QUESTION : est-ce qu'on cree un fichier texte ou autre pour traiter les donn�es ?
-		
-		//QUESTION : combien cree-t-on de fichiers de resultats : 1 par trajet ou 1 par carte ?
+		//QUESTION : combien cree-t-on de fichiers de resultats : 1 par trajet !
 		for (int i=0; i<EcritureDonnees.nbPaires; i++) {
-			nomFichier= nomCarte+"_"+ nomEval + EcritureDonnees.nbPaires + nomAlgo + "_" +(i+1)+".txt";			
-		}
-		
-		File file = new File(nomFichier);
-		// Cr�e le fichier s'il n'existe pas
-		try {
-			if (!file.exists()) {
-				file.createNewFile();
-			}
+			nomFichier= nomCarte+"_"+ nomEval + EcritureDonnees.nbPaires + nomAlgo + "_" +(i+1)+".txt";	
+			File file = new File(nomFichier);
+			// Cr�e le fichier s'il n'existe pas
+			try {
+				if (!file.exists()) {
+					file.createNewFile();
+				}
+				
+				FileWriter fw = new FileWriter(file);
+				BufferedWriter bw = new BufferedWriter(fw);
+				
+				//Ecrit le nom de la carte et le nombre de paires
+				bw.write("nomCarte");
+				bw.newLine();	
+				bw.write(type);
+				bw.newLine();
+				bw.write(EcritureDonnees.nbPaires);	
+				bw.newLine();
+				bw.write(nomAlgo);	
+				bw.newLine();
 			
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			//Ecrit le nom de la carte et le nombre de paires
-			bw.write("nomCarte");
-			bw.newLine();	
-			bw.write(type);
-			bw.newLine();
-			bw.write(EcritureDonnees.nbPaires);	
-			bw.newLine();
-			bw.write(nomAlgo);	
-			bw.newLine();
-			
-			//Ecrit les donnees sur les sommets
-			for (int i=0; i<EcritureDonnees.nbPaires ;i++) {
+			//Ecrit les donnees sur la paire origine/destination correspondante
 				//Ecrit les numeros des sommets
 				bw.write(listeOrigine.get(i));
-				bw.write(" ");
+				bw.write(";");
 				bw.write(listeDest.get(i));
 				
 				//Si c'est Dijsktra
@@ -121,11 +155,22 @@ public class EcritureResultats {
 				//Si c'est AStar
 				
 				//Ecrit les valeur calculees
+
+				//valeur solution
+				bw.write();
+				
+				//temps cpu
+				bw.write();
+				
+				//nb sommets explorés
+
+				bw.write();
+				//nb sommets marqués
+
+				bw.write();
+				//taille max du tas
 				
 				
-				
-				
-			}
 			
 			bw.close();	
 		}

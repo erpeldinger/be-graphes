@@ -7,8 +7,8 @@ import java.io.File;
 import org.insa.graph.Graph;
 
 /** 
- * Cette classe permet de lire et récupérer les données d'un fichier texte
- * pour ensuite les utiliser afin de créer les tests de performance.
+ * Cette classe permet de lire et rï¿½cupï¿½rer les donnï¿½es d'un fichier texte
+ * pour ensuite les utiliser afin de crï¿½er les tests de performance.
 */
 
 
@@ -36,20 +36,23 @@ public class LectureDonnees{
 		
 	}
 	
+	public ArrayList<Integer> getListeOri () {return listeOrigine; }
+	public ArrayList<Integer> getListeDest() { return listeDest;}
+	
 	/** 
-	 * Méthodes
+	 * Mï¿½thodes
 	 */	
 	
 	
-	// On récupère les données des fichiers textes pour faire 
+	// On rï¿½cupï¿½re les donnï¿½es des fichiers textes pour faire 
 	//les calculs des chemins
 	
 	//Scanner 
 	//BufferedWriter
 	
-	//Lancer les calculs séparéments
+	//Lancer les calculs sï¿½parï¿½ments
 	
-	//On récupère dans carte : nom, type, sommets
+	//On rï¿½cupï¿½re dans carte : nom, type, sommets
 	
 	public void LectureFichier(String nomFichier) {
 		
@@ -62,7 +65,7 @@ public class LectureDonnees{
 				nomCarte = sc.nextLine();				
 			}
 			
-			//Recupere le type d'évaluation
+			//Recupere le type d'ï¿½valuation
 			if (sc.hasNextInt()) {
 				type = sc.nextInt();				
 			}

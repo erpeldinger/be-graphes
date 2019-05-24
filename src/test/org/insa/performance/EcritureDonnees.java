@@ -12,8 +12,8 @@ import org.insa.graph.Graph;
 
 /** 
  * 
- * Cette classe permet de récupérer les informations d'une carte pour en extraire
- * les données et écrire ces informations dans un fichier texte.
+ * Cette classe permet de rï¿½cupï¿½rer les informations d'une carte pour en extraire
+ * les donnï¿½es et ï¿½crire ces informations dans un fichier texte.
  * 
  */ 
 	
@@ -39,7 +39,7 @@ public class EcritureDonnees {
 	/** 
 	 * Constructeur
 	 */
-	protected static final String[] cartes = {"fractal.mapgr", "midi-pyrenees.mapgr", "new-zealand.mapgr"};
+	public static final String[] cartes = {"fractal.mapgr", "midi-pyrenees.mapgr", "new-zealand.mapgr"};
 	
 	public EcritureDonnees(String nomCarte, int type) {
 		this.EcritureFichier(nomCarte, type);		
@@ -49,23 +49,23 @@ public class EcritureDonnees {
 	}
 	
 	/** 
-	 * Méthodes
+	 * Mï¿½thodes
 	 */
 	
 	
 	/**
-	 * On veut récupérer :
+	 * On veut rï¿½cupï¿½rer :
 	 * - le nombre total de noeuds
 	 * - le nombre d'arcs
 	 * 
-	 * On veut pouvoir créer des paires de sommets aléatoirement.	 
+	 * On veut pouvoir crï¿½er des paires de sommets alï¿½atoirement.	 
 	 */
 	public void EcritureFichier(String nomCarte, int type) {
 		
 		//long init = System.currentTimeMillis();
 		
 		if(!(type==0 || type==1)) {
-			   System.out.print("Type d'évalutation invalide \n");
+			   System.out.print("Type d'ï¿½valutation invalide \n");
 		}		
 		
 		int origine, dest;
@@ -76,10 +76,10 @@ public class EcritureDonnees {
 		List<Node> nouveauChemin = new ArrayList<Node>();
 		
 		//CA VEUT DIRE QUOI ???
-		//Les tests doivent être reproductibles, vous pouvez initialiser de manière déterministe 
-		//l’utilisation d’un générateur aléatoire afin d’obtenir les mêmes jeux de données.
+		//Les tests doivent ï¿½tre reproductibles, vous pouvez initialiser de maniï¿½re dï¿½terministe 
+		//lï¿½utilisation dï¿½un gï¿½nï¿½rateur alï¿½atoire afin dï¿½obtenir les mï¿½mes jeux de donnï¿½es.
 		
-		//on récupère les nodes, on regarde si peuvent créer chemins
+		//on rï¿½cupï¿½re les nodes, on regarde si peuvent crï¿½er chemins
 		for (int i=0; i<nbPaires ; i++) {
 			origine = rand.nextInt(graph.getNodes().size());
 			dest = rand.nextInt(graph.getNodes().size());
@@ -88,7 +88,7 @@ public class EcritureDonnees {
 			
 			chemin = Path.createShortestPathFromNodes(graph, nouveauChemin);
 			
-			//Si le chemin existe, on ajoute les sommets à la liste
+			//Si le chemin existe, on ajoute les sommets ï¿½ la liste
 			if (chemin.isValid()) {
 				listeOrigine.add(origine);
 				listeDest.add(dest);
@@ -106,7 +106,7 @@ public class EcritureDonnees {
 			nomFichier = nomCarte+"_"+ nbPaires +"_temps_data.txt";			
 		}
 		File file = new File(nomFichier);
-		// Crée le fichier s'il n'existe pas
+		// Crï¿½e le fichier s'il n'existe pas
 		try {
 			if (!file.exists()) {
 				file.createNewFile();
@@ -138,7 +138,7 @@ public class EcritureDonnees {
 			System.out.println(e.getMessage());
 		}
 	
-		//Calcule le temps d'exécution du CPU
+		//Calcule le temps d'exï¿½cution du CPU
 		//long calculCPU = System.currentTimeMillis()-init ;
 	}
 	
