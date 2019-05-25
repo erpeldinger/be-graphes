@@ -111,7 +111,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				//POUR LE TAS ON FAIT JUSTE GETCOST ET PAS TOTALCOST	
 				/**
 				 * if (labelSuccesseur.marked() == false && (labelSuccesseur.getCost() > (labelCourant.getCost() + arcCourant.getLength()))) {
-
 					labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
 					labelSuccesseur.setPere(arcCourant);
 				 */
@@ -172,8 +171,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				}
 
 			}
-			//System.out.println("nb successeurs testes à l'iteration " + iter + " : " + successeurTestes); //DE 1 A 4 TESTS a chaque iter
-			//System.out.println("taille du tas " + tas.size()); // ENVIRON 3 3 4 3 4 4 5 5 4 5 6 6 .... ~croisant jusqu'à 47 puis décroissant
+			//System.out.println("nb successeurs testes �  l'iteration " + iter + " : " + successeurTestes); //DE 1 A 4 TESTS a chaque iter
+			//System.out.println("taille du tas " + tas.size()); // ENVIRON 3 3 4 3 4 4 5 5 4 5 6 6 .... ~croisant jusqu'�  47 puis décroissant
 		}
 
 		// System.out.println("nb iter : " + iter);  // NB ITERATIONS : 1164
@@ -232,4 +231,3 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		return solution;
 	}
 }
-

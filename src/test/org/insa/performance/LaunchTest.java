@@ -24,11 +24,13 @@ public class LaunchTest {
 	public static void initAll() {
 		dataDirectory = new ArrayList<String>();
 		cartes = new ArrayList<String>();
-		dataDirectory.add("/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps");
+		dataDirectory.add("/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/");
+		dataDirectory.add("C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\cartes\\");
+		dataDirectory.add("C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\res\\");
 		dataDirectory.add("C:/Users/clariDocuments/3MIC/S2/graphes/Maps");
-		cartes.add("fractal.mapgr");
-		cartes.add("midi-pyrenees.mapgr");
-		cartes.add("new-zealand.mapgr");
+		cartes.add("fractal");
+		cartes.add("midi-pyrenees");
+		cartes.add("new-zealand");
 	}
 
 	
@@ -43,10 +45,13 @@ public class LaunchTest {
 			//Boucle pour les cartes
 			for (int l=0; l<cartes.size(); l++) {
 				try {
-					reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(cartes.get(l)))));
+					reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(1) + cartes.get(l) + ".mapgr"))));
 					graph = reader.read();
 					EcritureDonnees D = new EcritureDonnees(cartes.get(l),i,graph);
-					EcritureResultats F = new EcritureResultats(cartes.get(l), i, 0);
+					System.out.println("lancementTest ecriture données ok");
+					EcritureResultats F = new EcritureResultats(D, 0);
+
+					System.out.println("lancementTest ecriture données et res ok");
 				}
 				catch (Exception e) {}
 			}			
@@ -56,10 +61,11 @@ public class LaunchTest {
 		//Boucle pour les cartes
 		for (int l=0; l<cartes.size(); l++) {
 			try {
-				reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(cartes.get(l)))));
+				reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(1) + cartes.get(l) + ".mapgr"))));
 				graph = reader.read();
 				EcritureDonnees D = new EcritureDonnees(cartes.get(l),0,graph);
-				EcritureResultats F = new EcritureResultats(cartes.get(l), 0, 1);
+				//EcritureResultats F = new EcritureResultats(cartes.get(l), 0, 1);
+				EcritureResultats F = new EcritureResultats(D, 1); //modif constructeur
 			}
 			catch (Exception e) {}
 		}			
@@ -68,7 +74,9 @@ public class LaunchTest {
 	public static void main (String args[]) {
 		//main
 		initAll();
+		System.out.println("init fini");
 		lancementTest();
+		System.out.println("lancementtest fini");
 	}
 	
 

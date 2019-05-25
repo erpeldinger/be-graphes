@@ -26,7 +26,7 @@ public class EcritureDonnees {
 	 * Attributs
 	 */
 
-	protected static String nomFichier;	
+	protected String nomFichier;	
 	protected ArrayList<Integer> listeOrigine;
 	protected ArrayList<Integer> listeDest;		
 	  
@@ -36,13 +36,13 @@ public class EcritureDonnees {
 	/** 
 	 * Constructeur
 	 */
-	public EcritureDonnees(String nomCarte, int type, Graph graph) {
-		this.EcritureFichier(nomCarte, type, graph);		
+	public EcritureDonnees(String nomCarte, int type, Graph graph) {		
 		this.listeOrigine = new ArrayList<Integer>();
-		this.listeDest = new ArrayList<Integer>();		
+		this.listeDest = new ArrayList<Integer>();
+		this.EcritureFichier(nomCarte, type, graph);	
 	}
 	
-	public static String getNomFichier() { return nomFichier;}
+	public String getNomFichier() { return nomFichier;}
 	
 	/** 
 	 * Mï¿½thodes
@@ -79,10 +79,14 @@ public class EcritureDonnees {
 		for (int i=0; i<nbPaires ; i++) {
 			origine = rand.nextInt(graph.getNodes().size());
 			dest = rand.nextInt(graph.getNodes().size());
-			nouveauChemin.add(listeNode.get(origine));
-			nouveauChemin.add(listeNode.get(dest));
+			//nouveauChemin.add(listeNode.get(origine));
+			//nouveauChemin.add(listeNode.get(dest));
 			
-			chemin = Path.createShortestPathFromNodes(graph, nouveauChemin);
+			//test sans verif --ici ça ne marche plus
+			this.listeOrigine.add(origine);
+			this.listeDest.add(dest);
+			
+			/*chemin = Path.createShortestPathFromNodes(graph, nouveauChemin);
 			
 			//Si le chemin existe, on ajoute les sommets ï¿½ la liste
 			if (chemin.isValid()) {
@@ -92,8 +96,12 @@ public class EcritureDonnees {
 			else {
 				i--;
 			}
-			nouveauChemin.clear();
+			*/
+			//nouveauChemin.clear();
+			
 		}
+
+		System.out.println("fin for " + listeOrigine);
 		
 		if (type ==0) { //distance
 			nomFichier = nomCarte+"_"+ nbPaires +"_distance_data.txt";			
@@ -101,7 +109,7 @@ public class EcritureDonnees {
 		else { //temps
 			nomFichier = nomCarte+"_"+ nbPaires +"_temps_data.txt";			
 		}
-		File file = new File(nomFichier);
+		File file = new File(LaunchTest.dataDirectory.get(2) + nomFichier);
 		// Crï¿½e le fichier s'il n'existe pas
 		try {
 			if (!file.exists()) {
@@ -112,18 +120,20 @@ public class EcritureDonnees {
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			//Ecrit le nom de la carte et le nombre de paires
-			bw.write("nomCarte");
+			bw.write(nomCarte);
 			bw.newLine();	
-			bw.write(type);
+			bw.write(Integer.toString(type));
+			System.out.println("type ecrit: " + type);
 			bw.newLine();
-			bw.write(nbPaires);	
+			bw.write(Integer.toString(nbPaires));	
+			System.out.println(" nbpaires ecrites : " + nbPaires);
 			bw.newLine();
 			
 			//Ecrit les paires de sommets
 			for (int i=0; i<nbPaires ;i++) {			
-				bw.write(listeOrigine.get(i));
+				bw.write(Integer.toString(listeOrigine.get(i)));
 				bw.write(" ");
-				bw.write(listeDest.get(i));
+				bw.write(Integer.toString(listeDest.get(i)));
 				bw.newLine();
 			}
 			
@@ -136,6 +146,7 @@ public class EcritureDonnees {
 	
 		//Calcule le temps d'exï¿½cution du CPU
 		//long calculCPU = System.currentTimeMillis()-init ;
+		
 	}
 	
 	
