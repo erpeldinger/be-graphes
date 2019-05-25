@@ -4,7 +4,6 @@ import org.insa.algo.shortestpath.ShortestPathData;
 import org.insa.algo.*;
 
 public class LabelStar extends Label implements Comparable<Label> {
-
 	protected double borneInf;
 
 	public LabelStar(Node sc, ShortestPathData data) {
@@ -33,38 +32,6 @@ public class LabelStar extends Label implements Comparable<Label> {
 	public double getTotalCost() {
 		return this.borneInf + this.cout; //pour l'ordre des sommets dans le tas
 	}
-	public int compareTo(LabelStar l) {
 
-
-		int res = Double.compare(this.getTotalCost(), ((LabelStar)l).getTotalCost());
-		if(res == 0) {
-			res = Double.compare(this.borneInf, ((LabelStar)l).getBorne());
-		}
-		return res; 
-	}
-	/*
-		int comp;
-
-		if (this.getTotalCost() < l.getTotalCost()) {
-			comp = -1;
-		}
-
-		else if (this.getTotalCost() == l.getTotalCost()) {
-			if (this.getBorne() < l.getBorne()) {
-				comp = -1 ;
-			}
-			else if (this.getBorne() > l.getBorne()) {
-				comp = 1;
-			}
-			else {
-				comp = 0;
-			}
-		}
-
-		else {
-			comp = 1;
-		}			
-		return comp;
-	 */
+	
 }
-

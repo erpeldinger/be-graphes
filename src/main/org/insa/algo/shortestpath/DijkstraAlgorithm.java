@@ -78,12 +78,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		notifyOriginProcessed(data.getOrigin());        
 
 		//Tant qu'il existe des sommets non marques
-		while(!tas.isEmpty() && !(labelDest.marked())) {
+		while(!tas.isEmpty()) {
 
 			//SI LE NODE EST DEJA DANS LE TAS ON MET A JOUR SON COUT
 
 			//successeurTestes = 0;
 			//iter++;
+
 			labelCourant = tas.findMin();
 			tas.remove(labelCourant);
 			//Notification aux obervateurs que l'on a atteint un noeud pour la premiï¿½re fois
@@ -91,14 +92,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			labelCourant.setMark();
 			//sommets marques
 			this.nbSommetsMarques+=1;
-
-			/**if(data.getDestination().equals(labelCourant.getSommet())) {
+			
+			//Si on arrive à la destination
+			if(data.getDestination().equals(labelCourant.getSommet())) {
 				break;
-			}*/
-
-			//Notifie les observateurs que le sommet courant a ï¿½tï¿½ marquï¿½
-			//)notifyNodeMarked(labelCourant.getSommet());
-			//System.out.println("label " + labelCourant.getCost()); // COUT CROISSANT OK
+			}
 
 			//On parcourt les successeurs y de x
 			for (Arc arcCourant : labelCourant.getSommet().getSuccessors()) {
@@ -117,11 +115,43 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					labelSuccesseur.setCost(labelCourant.getCost() + (int)arcCourant.getLength());
 					labelSuccesseur.setPere(arcCourant);
 				 */
+				
+				//Si le label n'existe pas, on le crée
+				if(labelSuccesseur == null) {
+					notifyDestinationReached(arcCourant.getDestination());
+					labelSuccesseur = creerLabel(arcCourant.getDestination(), data);
+					listeLabel.set(labelSuccesseur.getSommet().getId(),labelSuccesseur)  ;
+				}
+				
+				//Si le successeur n'est pas marqué
 				if (labelSuccesseur.marked() == false) {
-					if (labelSuccesseur.getTotalCost() > labelCourant.getTotalCost() + arcCourant.getLength()) {
-						labelSuccesseur.setCost(labelCourant.getTotalCost() + (int)arcCourant.getLength());
+					if (labelSuccesseur.getTotalCost() > (labelCourant.getCost() + data.getCost(arcCourant) 
+					+ (labelSuccesseur.getTotalCost() - labelSuccesseur.getCost()))) {
+							
+						/**
+						 * if : labelSuccesseur.getTotalCost() > (labelCourant.getTotalCost() + data.getCost(arcCourant)) 
+						 */
+						
+						/**
+						if : (labelSuccesseur.getTotalCost() > (labelCourant.getCost() + data.getCost(arcCourant) 
+						+ (labelSuccesseur.getTotalCost() - labelSuccesseur.getCost())))
+						|| (labelSuccesseur.getCost() == Double.POSITIVE_INFINITY)
+						*/
+						
+						labelSuccesseur.setCost(labelCourant.getCost() + data.getCost(arcCourant));
 						labelSuccesseur.setPere(arcCourant);
-
+						
+						/**
+						
+						//Si le label est deja dans le tas, on met a jour sa position
+						if (labelSuccesseur.getInTas()) {
+							tas.remove(labelSuccesseur);
+						}
+						else {
+							labelSuccesseur.setInTas();
+						}
+						*/
+						
 						//on insere un label s'il n'Ã©tait pas deja dans la liste
 						try {
 							tas.remove(labelSuccesseur);

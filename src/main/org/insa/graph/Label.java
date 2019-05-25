@@ -14,6 +14,9 @@ public class Label implements Comparable <Label> {
 	//sommet précédent sur le chemin correspondant au plus court chemin 
 	private Arc arcPere;
 	
+	//Variable vraie si le sommet est dans le tas
+	private boolean inTas;
+	
 
 	//Constructeur si le sommet n'est pas marqué, le met à false par défaut
 	public Label(Node sc) {
@@ -21,10 +24,23 @@ public class Label implements Comparable <Label> {
 		this.marque = false;
 		this.cout = Integer.MAX_VALUE;
 		this.arcPere = null;
+		this.inTas = false;
 	}
 	//Méthode
 	public double getCost() {
 		return this.cout;
+	}
+	
+	public boolean getInTas() {
+		return this.inTas;
+	}
+	
+	public double getTotalCost() {
+		return this.cout; //pour l'ordre des sommets dans le tas
+	}
+
+	public boolean marked() {
+		return this.marque;
 	}
 	
 	public double setCost(double cout) {
@@ -32,15 +48,6 @@ public class Label implements Comparable <Label> {
 		return this.cout;
 	}
 	
-	public double getTotalCost() {
-		return this.cout; //pour l'ordre des sommets dans le tas
-	}
-	
-	
-	public boolean marked() {
-		return this.marque;
-	}
-
 	public boolean setMark() {
 		this.marque = true ;
 		return this.marque;
@@ -58,15 +65,59 @@ public class Label implements Comparable <Label> {
 		this.arcPere = p;
 	}
 	
+	public void setInTas() {
+		this.inTas = true;
+	}
+	
 	public String toString(){
 		return "Sommet n� "+this.sommetCourant+" Cout: "+this.cout;
 		
 	}
 
+	/**
 	//Compare les co�ts totaux de deux labels, renvoit -1 si <; 0 si =; 1 si >
 	public int compareTo(Label l) {
 		return Double.compare(this.cout, l.getCost());
 	}
+	*/
+	
+	public int compareTo(Label l) {
+
+
+		/**
+		int res = Double.compare(this.getTotalCost(), ((LabelStar)l).getTotalCost());
+		if(res == 0) {
+			res = Double.compare(this.borneInf, ((LabelStar)l).getBorne());
+		}
+		return res; */
+
+		int comp;
+
+		if (this.getTotalCost() < l.getTotalCost()) {
+			comp = -1;
+		}
+
+		else if (this.getTotalCost() == l.getTotalCost()) {
+			/**
+			if (this.getBorne() < l.getBorne()) {
+				comp = -1 ;
+			}
+			else if (this.getBorne() > l.getBorne()) {
+				comp = 1;
+			}
+			else {
+				comp = 0;
+			}
+			*/
+			comp = 0;
+		}
+
+		else {
+			comp = 1;
+		}			
+		return comp;
+	}
+	
 
 	public boolean equals(Label x) {
 		return this.sommetCourant.equals(x.getSommet());

@@ -18,319 +18,324 @@ import java.util.List;
  */
 public class Path {
 
-    /**
-     * Create a new path that goes through the given list of nodes (in order),
-     * choosing the fastest route if multiple are available.
-     * 
-     * @param graph Graph containing the nodes in the list.
-     * @param nodes List of nodes to build the path.
-     * 
-     * @return A path that goes through the given list of nodes.
-     * 
-     * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
-     *         consecutive nodes in the list are not connected in the graph.
-     * 
-     */
-    public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
-            throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        
-        if (nodes.size() == 0) {
-        	return new Path(graph);
-        }
-        if (nodes.size() ==1) { /* si un seul node et pas d'arc */
-        	return new Path(graph, nodes.get(0));
-        }
-        
-        double temps = Double.MAX_VALUE;
-        Arc bonarc = nodes.get(0).getSuccessors().get(0);
-        for (int i =0 ; i<nodes.size() - 1 ; i++) {
-        	if (!graph.getNodes().contains(nodes.get(i))) { /* si node pas dans le graphe */
-        		throw new IllegalArgumentException("node pas dans le graphe");
-        	}
-        	if (nodes.get(i).getSuccessors().size() == 0) {
-        		throw new IllegalArgumentException("pas de successeur");
-        	}
-        	boolean lien = false;
-        	for ( Arc iter : nodes.get(i).getSuccessors()) {
-        		if (iter.getDestination() == nodes.get(i+1)) {
-        			if (iter.getMinimumTravelTime() < temps) {
-        			temps = iter.getMinimumTravelTime();
-        			bonarc = iter;
-        			lien = true;
-        			}
-        		}
-        	}
-    		if (lien == false) {
-        		throw new IllegalArgumentException("nodes pas lies");
-    		}
-    		arcs.add(bonarc);
-    	    temps = Double.MAX_VALUE;
-        }
-        return new Path(graph, arcs);
-    }
+	/**
+	 * Create a new path that goes through the given list of nodes (in order),
+	 * choosing the fastest route if multiple are available.
+	 * 
+	 * @param graph Graph containing the nodes in the list.
+	 * @param nodes List of nodes to build the path.
+	 * 
+	 * @return A path that goes through the given list of nodes.
+	 * 
+	 * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
+	 *         consecutive nodes in the list are not connected in the graph.
+	 * 
+	 */
+	public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
+			throws IllegalArgumentException {
+		
+		
+		List<Arc> arcs = new ArrayList<Arc>();
 
-    /**
-     * Create a new path that goes through the given list of nodes (in order),
-     * choosing the shortest route if multiple are available.
-     * 
-     * @param graph Graph containing the nodes in the list.
-     * @param nodes List of nodes to build the path.
-     * 
-     * @return A path that goes through the given list of nodes.
-     * 
-     * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
-     *         consecutive nodes in the list are not connected in the graph.
-     * 
-     */
-    public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
-            throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        if (nodes.size() == 0) {
-        	return new Path(graph);
-        }
-        if (nodes.size() ==1) { /* si un seul node et pas d'arc */
-        	if (!graph.getNodes().contains(nodes.get(0))) { /* si node pas dans le graphe */
-        		throw new IllegalArgumentException("node pas dans le graphe");
-        	}
-        	return new Path(graph, nodes.get(0));
-        }
-        
-        float longueur = Float.MAX_VALUE;
-        Arc bonarc;
-        boolean lien = false;
-        for (int i =0 ; i<nodes.size()-1 ; i++) {
-        	if (!graph.getNodes().contains(nodes.get(i))) { /* si node pas dans le graphe */
-        		throw new IllegalArgumentException("node pas dans le graphe");
-        	}
-        	if (nodes.get(i).getSuccessors().size() == 0) {
-        		throw new IllegalArgumentException("pas de successeur");
-        	}
-        	bonarc = nodes.get(0).getSuccessors().get(0);
-        	for ( Arc iter : nodes.get(i).getSuccessors()) {
-        		if (iter.getDestination() == nodes.get(i+1) ) {
-        			lien = true;
-        			if (iter.getLength() < longueur) {
-        				longueur = iter.getLength();
-        				bonarc = iter;
-        			}
-        		}
-        	}
-    		if (lien == false) {
-        		throw new IllegalArgumentException("nodes pas lies");
-    		}
-        	arcs.add(bonarc);
-        	longueur = Float.MAX_VALUE;
-        }
-        return new Path(graph, arcs);
-    }
+		if (nodes.size() == 0) {
+			return new Path(graph);
+		}
+		if (nodes.size() ==1) { /* si un seul node et pas d'arc */
+			return new Path(graph, nodes.get(0));
+		}
+		else {
+			double temps = Double.MAX_VALUE;
+			Arc bonarc = nodes.get(0).getSuccessors().get(0);
+			for (int i =0 ; i<nodes.size() - 1 ; i++) {
+				if (!graph.getNodes().contains(nodes.get(i))) { /* si node pas dans le graphe */
+					throw new IllegalArgumentException("node pas dans le graphe");
+				}
+				if (nodes.get(i).getSuccessors().size() == 0) {
+					throw new IllegalArgumentException("pas de successeur");
+				}
+				boolean lien = false;
+				for ( Arc iter : nodes.get(i).getSuccessors()) {
+					if (iter.getDestination() == nodes.get(i+1)) {
+						if (iter.getMinimumTravelTime() < temps) {
+							temps = iter.getMinimumTravelTime();
+							bonarc = iter;
+							lien = true;
+						}
+					}
+				}
+				if (lien == false) {
+					throw new IllegalArgumentException("nodes pas lies");
+				}
+				arcs.add(bonarc);
+				temps = Double.MAX_VALUE;
+			}
+		}
 
-    /**
-     * Concatenate the given paths.
-     * 
-     * @param paths Array of paths to concatenate.
-     * 
-     * @return Concatenated path.
-     * 
-     * @throws IllegalArgumentException if the paths cannot be concatenated (IDs of
-     *         map do not match, or the end of a path is not the beginning of the
-     *         next).
-     */
-    public static Path concatenate(Path... paths) throws IllegalArgumentException {
-        if (paths.length == 0) {
-            throw new IllegalArgumentException("Cannot concatenate an empty list of paths.");
-        }
-        final String mapId = paths[0].getGraph().getMapId();
-        for (int i = 1; i < paths.length; ++i) {
-            if (!paths[i].getGraph().getMapId().equals(mapId)) {
-                throw new IllegalArgumentException(
-                        "Cannot concatenate paths from different graphs.");
-            }
-        }
-        ArrayList<Arc> arcs = new ArrayList<>();
-        for (Path path: paths) {
-            arcs.addAll(path.getArcs());
-        }
-        Path path = new Path(paths[0].getGraph(), arcs);
-        if (!path.isValid()) {
-            throw new IllegalArgumentException(
-                    "Cannot concatenate paths that do not form a single path.");
-        }
-        return path;
-    }
+		return new Path(graph, arcs);
+	}
 
-    // Graph containing this path.
-    private final Graph graph;
 
-    // Origin of the path
-    private final Node origin;
+		/**
+		 * Create a new path that goes through the given list of nodes (in order),
+		 * choosing the shortest route if multiple are available.
+		 * 
+		 * @param graph Graph containing the nodes in the list.
+		 * @param nodes List of nodes to build the path.
+		 * 
+		 * @return A path that goes through the given list of nodes.
+		 * 
+		 * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
+		 *         consecutive nodes in the list are not connected in the graph.
+		 * 
+		 */
+		public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
+				throws IllegalArgumentException {
+			List<Arc> arcs = new ArrayList<Arc>();
+			if (nodes.size() == 0) {
+				return new Path(graph);
+			}
+			if (nodes.size() ==1) { /* si un seul node et pas d'arc */
+				if (!graph.getNodes().contains(nodes.get(0))) { /* si node pas dans le graphe */
+					throw new IllegalArgumentException("node pas dans le graphe");
+				}
+				return new Path(graph, nodes.get(0));
+			}
 
-    // List of arcs in this path.
-    private final List<Arc> arcs;
+			float longueur = Float.MAX_VALUE;
+			Arc bonarc;
+			boolean lien = false;
+			for (int i =0 ; i<nodes.size()-1 ; i++) {
+				if (!graph.getNodes().contains(nodes.get(i))) { /* si node pas dans le graphe */
+					throw new IllegalArgumentException("node pas dans le graphe");
+				}
+				if (nodes.get(i).getSuccessors().size() == 0) {
+					throw new IllegalArgumentException("pas de successeur");
+				}
+				bonarc = nodes.get(0).getSuccessors().get(0);
+				for ( Arc iter : nodes.get(i).getSuccessors()) {
+					if (iter.getDestination() == nodes.get(i+1) ) {
+						lien = true;
+						if (iter.getLength() < longueur) {
+							longueur = iter.getLength();
+							bonarc = iter;
+						}
+					}
+				}
+				if (lien == false) {
+					throw new IllegalArgumentException("nodes pas lies");
+				}
+				arcs.add(bonarc);
+				longueur = Float.MAX_VALUE;
+			}
+			return new Path(graph, arcs);
+		}
 
-    /**
-     * Create an empty path corresponding to the given graph.
-     * 
-     * @param graph Graph containing the path.
-     */
-    public Path(Graph graph) {
-        this.graph = graph;
-        this.origin = null;
-        this.arcs = new ArrayList<>();
-    }
+		/**
+		 * Concatenate the given paths.
+		 * 
+		 * @param paths Array of paths to concatenate.
+		 * 
+		 * @return Concatenated path.
+		 * 
+		 * @throws IllegalArgumentException if the paths cannot be concatenated (IDs of
+		 *         map do not match, or the end of a path is not the beginning of the
+		 *         next).
+		 */
+		public static Path concatenate(Path... paths) throws IllegalArgumentException {
+			if (paths.length == 0) {
+				throw new IllegalArgumentException("Cannot concatenate an empty list of paths.");
+			}
+			final String mapId = paths[0].getGraph().getMapId();
+			for (int i = 1; i < paths.length; ++i) {
+				if (!paths[i].getGraph().getMapId().equals(mapId)) {
+					throw new IllegalArgumentException(
+							"Cannot concatenate paths from different graphs.");
+				}
+			}
+			ArrayList<Arc> arcs = new ArrayList<>();
+			for (Path path: paths) {
+				arcs.addAll(path.getArcs());
+			}
+			Path path = new Path(paths[0].getGraph(), arcs);
+			if (!path.isValid()) {
+				throw new IllegalArgumentException(
+						"Cannot concatenate paths that do not form a single path.");
+			}
+			return path;
+		}
 
-    /**
-     * Create a new path containing a single node.
-     * 
-     * @param graph Graph containing the path.
-     * @param node Single node of the path.
-     */
-    public Path(Graph graph, Node node) {
-        this.graph = graph;
-        this.origin = node;
-        this.arcs = new ArrayList<>();
-    }
+		// Graph containing this path.
+		private final Graph graph;
 
-    /**
-     * Create a new path with the given list of arcs.
-     * 
-     * @param graph Graph containing the path.
-     * @param arcs Arcs to construct the path.
-     */
-    public Path(Graph graph, List<Arc> arcs) {
-        this.graph = graph;
-        this.arcs = arcs;
-        this.origin = arcs.size() > 0 ? arcs.get(0).getOrigin() : null;
-    }
+		// Origin of the path
+		private final Node origin;
 
-    /**
-     * @return Graph containing the path.
-     */
-    public Graph getGraph() {
-        return graph;
-    }
+		// List of arcs in this path.
+		private final List<Arc> arcs;
 
-    /**
-     * @return First node of the path.
-     */
-    public Node getOrigin() {
-        return origin;
-    }
+		/**
+		 * Create an empty path corresponding to the given graph.
+		 * 
+		 * @param graph Graph containing the path.
+		 */
+		public Path(Graph graph) {
+			this.graph = graph;
+			this.origin = null;
+			this.arcs = new ArrayList<>();
+		}
 
-    /**
-     * @return Last node of the path.
-     */
-    public Node getDestination() {
-        return arcs.get(arcs.size() - 1).getDestination();
-    }
+		/**
+		 * Create a new path containing a single node.
+		 * 
+		 * @param graph Graph containing the path.
+		 * @param node Single node of the path.
+		 */
+		public Path(Graph graph, Node node) {
+			this.graph = graph;
+			this.origin = node;
+			this.arcs = new ArrayList<>();
+		}
 
-    /**
-     * @return List of arcs in the path.
-     */
-    public List<Arc> getArcs() {
-        return Collections.unmodifiableList(arcs);
-    }
+		/**
+		 * Create a new path with the given list of arcs.
+		 * 
+		 * @param graph Graph containing the path.
+		 * @param arcs Arcs to construct the path.
+		 */
+		public Path(Graph graph, List<Arc> arcs) {
+			this.graph = graph;
+			this.arcs = arcs;
+			this.origin = arcs.size() > 0 ? arcs.get(0).getOrigin() : null;
+		}
 
-    /**
-     * Check if this path is empty (it does not contain any node).
-     * 
-     * @return true if this path is empty, false otherwise.
-     */
-    public boolean isEmpty() {
-        return this.origin == null;
-    }
+		/**
+		 * @return Graph containing the path.
+		 */
+		public Graph getGraph() {
+			return graph;
+		}
 
-    /**
-     * Get the number of <b>nodes</b> in this path.
-     * 
-     * @return Number of nodes in this path.
-     */
-    public int size() {
-        return isEmpty() ? 0 : 1 + this.arcs.size();
-    }
+		/**
+		 * @return First node of the path.
+		 */
+		public Node getOrigin() {
+			return origin;
+		}
 
-    /**
-     * Check if this path is valid.
-     * 
-     * A path is valid if any of the following is true:
-     * <ul>
-     * <li>it is empty;</li>
-     * <li>it contains a single node (without arcs);</li>
-     * <li>the first arc has for origin the origin of the path and, for two
-     * consecutive arcs, the destination of the first one is the origin of the
-     * second one.</li>
-     * </ul>
-     * 
-     * @return true if the path is valid, false otherwise.
-     * 
-     */
-    public boolean isValid() {
-        boolean result = false;
-        if (this.isEmpty()) {
-        	result = true;
-        }
-        else if (this.size() ==1) {
-        	result = true;
-        }
-        else {
-        	result = true;
-        	Node origine = null;
-	        for (Arc iter : this.arcs ) {
-	        	if ( origine != null) {
-	        		if (iter.getOrigin() != origine) {
-	        			result = false;
-	        		}
-	        	}
-	        	origine = iter.getDestination();
-	        }
-        }
-        return result;
-    }
+		/**
+		 * @return Last node of the path.
+		 */
+		public Node getDestination() {
+			return arcs.get(arcs.size() - 1).getDestination();
+		}
 
-    /**
-     * Compute the length of this path (in meters).
-     * 
-     * @return Total length of the path (in meters).
-     * 
-     */
-    public float getLength() {
-    	float result=0;
-    	for (Arc monarc : arcs) {
-    		result += monarc.getLength();
-    	}
-        return result;
-    }
+		/**
+		 * @return List of arcs in the path.
+		 */
+		public List<Arc> getArcs() {
+			return Collections.unmodifiableList(arcs);
+		}
 
-    /**
-     * Compute the time required to travel this path if moving at the given speed.
-     * 
-     * @param speed Speed to compute the travel time.
-     * 
-     * @return Time (in seconds) required to travel this path at the given speed (in
-     *         kilometers-per-hour).
-     * 
-     */
-    public double getTravelTime(double speed) {
-    	double result=0;
-    	for (Arc monarc : arcs) {
-    		result += monarc.getTravelTime(speed);
-    	}
-        return result;
-    }
+		/**
+		 * Check if this path is empty (it does not contain any node).
+		 * 
+		 * @return true if this path is empty, false otherwise.
+		 */
+		public boolean isEmpty() {
+			return this.origin == null;
+		}
 
-    /**
-     * Compute the time to travel this path if moving at the maximum allowed speed
-     * on every arc.
-     * 
-     * @return Minimum travel time to travel this path (in seconds).
-     * 
-     */
-    public double getMinimumTravelTime() {
-    	double result=0;
-    	for (Arc monarc : arcs) {
-    		result += monarc.getMinimumTravelTime();
-    	}
-        return result;
-    }
+		/**
+		 * Get the number of <b>nodes</b> in this path.
+		 * 
+		 * @return Number of nodes in this path.
+		 */
+		public int size() {
+			return isEmpty() ? 0 : 1 + this.arcs.size();
+		}
 
-}
+		/**
+		 * Check if this path is valid.
+		 * 
+		 * A path is valid if any of the following is true:
+		 * <ul>
+		 * <li>it is empty;</li>
+		 * <li>it contains a single node (without arcs);</li>
+		 * <li>the first arc has for origin the origin of the path and, for two
+		 * consecutive arcs, the destination of the first one is the origin of the
+		 * second one.</li>
+		 * </ul>
+		 * 
+		 * @return true if the path is valid, false otherwise.
+		 * 
+		 */
+		public boolean isValid() {
+			boolean result = false;
+			if (this.isEmpty()) {
+				result = true;
+			}
+			else if (this.size() ==1) {
+				result = true;
+			}
+			else {
+				result = true;
+				Node origine = null;
+				for (Arc iter : this.arcs ) {
+					if ( origine != null) {
+						if (iter.getOrigin() != origine) {
+							result = false;
+						}
+					}
+					origine = iter.getDestination();
+				}
+			}
+			return result;
+		}
+
+		/**
+		 * Compute the length of this path (in meters).
+		 * 
+		 * @return Total length of the path (in meters).
+		 * 
+		 */
+		public float getLength() {
+			float result=0;
+			for (Arc monarc : arcs) {
+				result += monarc.getLength();
+			}
+			return result;
+		}
+
+		/**
+		 * Compute the time required to travel this path if moving at the given speed.
+		 * 
+		 * @param speed Speed to compute the travel time.
+		 * 
+		 * @return Time (in seconds) required to travel this path at the given speed (in
+		 *         kilometers-per-hour).
+		 * 
+		 */
+		public double getTravelTime(double speed) {
+			double result=0;
+			for (Arc monarc : arcs) {
+				result += monarc.getTravelTime(speed);
+			}
+			return result;
+		}
+
+		/**
+		 * Compute the time to travel this path if moving at the maximum allowed speed
+		 * on every arc.
+		 * 
+		 * @return Minimum travel time to travel this path (in seconds).
+		 * 
+		 */
+		public double getMinimumTravelTime() {
+			double result=0;
+			for (Arc monarc : arcs) {
+				result += monarc.getMinimumTravelTime();
+			}
+			return result;
+		}
+
+	}
