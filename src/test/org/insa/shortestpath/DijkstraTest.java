@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Arrays;
 
 import org.insa.graph.RoadInformation.RoadType;
+import org.insa.performance.LaunchTest;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -229,12 +230,25 @@ public class DijkstraTest {
 
     @Test
     public void testDoScenarioDistance() throws Exception {
+    	LaunchTest.initAll();
     	
-		System.out.println("/-------------- Tests de sc�narios en distance --------------/"+"\n");
-		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
-		
-		System.out.println("Carte : Fractal\n");
+    	/**RAPPEL
+    	 * dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/")
+							"C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\cartes\\")
+							"C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\res\\")
+							"C:/Users/clari/Documents/3MIC/S2/graphes/Maps"};
+		 * 
+		 * cartes = {"carre-dense"
+					 "midi-pyrenees"
+					 "new-zealand"
+					 ".mapgr"};
+    	 */
+    	
+    	
+		System.out.println("/-------------- Tests de scenarios en distance (Dijkstra) --------------/"+"\n");
+		String carte = LaunchTest.dataDirectory.get(3)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
+				
+		System.out.println("Carte : " + LaunchTest.cartes.get(1)+" \n");
 		System.out.println("Mode : distance\n");
 		
 		DijkstraScenarioTest test = new  DijkstraScenarioTest();
@@ -274,13 +288,12 @@ public class DijkstraTest {
 
     @Test
 	public void testDoScenarioTemps() throws Exception {
-    	
-		System.out.println("/-------------- Tests de sc�narios en temps --------------/"+"\n");
-		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
+    	LaunchTest.initAll();
+		System.out.println("/-------------- Tests de scenarios en temps --------------/"+"\n");
+		String carte = LaunchTest.dataDirectory.get(3)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
 		
 		
-		System.out.println("Carte : Fractal\n");
+		System.out.println("Carte : " + LaunchTest.cartes.get(1)+" \n");
 		System.out.println("Mode : distance\n");
 		
 		DijkstraScenarioTest test = new  DijkstraScenarioTest();

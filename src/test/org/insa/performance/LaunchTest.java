@@ -27,10 +27,11 @@ public class LaunchTest {
 		dataDirectory.add("/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/");
 		dataDirectory.add("C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\cartes\\");
 		dataDirectory.add("C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\res\\");
-		dataDirectory.add("C:/Users/clariDocuments/3MIC/S2/graphes/Maps");
-		cartes.add("fractal");
+		dataDirectory.add("C:/Users/clari/Documents/3MIC/S2/graphes/Maps/");
+		cartes.add("carre-dense");
 		cartes.add("midi-pyrenees");
 		cartes.add("new-zealand");
+		cartes.add(".mapgr");
 	}
 
 	

@@ -48,7 +48,7 @@ public class AStarScenarioTest {
 			graph = reader.read();
 		   //Si le type d'�valuation n'existe pas 
 		   if(!(type==0 || type==1)) {
-			   System.out.print("Type d'�valutation invalide \n");
+			   System.out.print("Type d'evalutation invalide \n");
 		   }
 		   
 		   //Si l'origine ou la destination ne sont pas dans le graphe
@@ -67,25 +67,24 @@ public class AStarScenarioTest {
 			   
 			   //Evaluation en temps (voiture)
 			   else {
-				   //get0 ou get1 ?
 				   arc = ArcInspectorFactory.getAllFilters().get(2);				   
 				   System.out.print("Type = temps \n");
 			   }
 			   
-			   //Si l'origine et la destination sont les m�mes
+			   //Si l'origine et la destination sont les memes
 			   
 			   if(origine == dest) {
 				   System.out.println("Origine = destination");
 				   System.out.println("Co�t trajet : 0");			
 			   }
-			   //Cr�ation des plus courts chemins
+			   //Creation des plus courts chemins
 			   else {
 				   ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(dest), arc);
 					
 				   AStarAlgorithm A = new AStarAlgorithm(data);
 				   DijkstraAlgorithm D = new DijkstraAlgorithm(data);
 				 		   
-				   //On r�cup�re les solutions obtenues avec Dijkstra et AStar
+				   //On recupere les solutions obtenues avec Dijkstra et AStar
 				   ShortestPathSolution solutionAStar = A.run();
 				   ShortestPathSolution solutionDijkstra = D.run();
 				   

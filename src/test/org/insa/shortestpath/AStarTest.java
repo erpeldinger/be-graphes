@@ -12,8 +12,10 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
+import org.insa.performance.*;
 
 import org.insa.graph.RoadInformation.RoadType;
+import org.insa.performance.LaunchTest;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -226,16 +228,28 @@ public class AStarTest {
     } */
 
     
-    //---------------------------- 2.1 Test des scï¿½narios avec oracle ------------------------------------------------------
+    //---------------------------- 2.1 Test des scenarios avec oracle ------------------------------------------------------
     
 	@Test 
     public void testDoScenarioDistance() throws Exception {
+		LaunchTest.initAll();
+    	/**RAPPEL
+    	 * dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/")
+							"C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\cartes\\")
+							"C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\res\\")
+							"C:/Users/clari/Documents/3MIC/S2/graphes/Maps"};
+		 * 
+		 * cartes = {"carre-dense"
+					 "midi-pyrenees"
+					 "new-zealand";
+					 ".mapgr"};
+    	 */
     	
-		System.out.println("/-------------- Tests de scï¿½narios en distance (AStar) --------------/"+"\n");
-		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/belgium.mapgr";
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
-	
-		System.out.println("Carte : Fractal\n");
+    	
+		System.out.println("/-------------- Tests de scenarios en distance (AStar) --------------/"+"\n");
+		String carte = LaunchTest.dataDirectory.get(3)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
+		
+		System.out.println("Carte : " + LaunchTest.cartes.get(1) +" \n");
 		System.out.println("Mode : distance\n");
 		
 		AStarScenarioTest test = new AStarScenarioTest();
@@ -272,11 +286,11 @@ public class AStarTest {
 	
 	public void testDoScenarioTemps() throws Exception {
 
-		System.out.println("/-------------- Tests de scénarios en temps (AStar) --------------/"+"\n");
-		//String carte = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/fractal.mapgr";
-		String carte = "C:/Users/clariDocuments/3MIC/S2/graphes/Maps/fractal.mapgr";
-
-		System.out.println("Carte : Belgique\n");
+		System.out.println("/-------------- Tests de scenarios en temps (AStar) --------------/"+"\n");
+		String carte = LaunchTest.dataDirectory.get(3)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
+		
+		
+		System.out.println("Carte : " + LaunchTest.cartes.get(1)+" \n");
 		System.out.println("Mode : distance\n");
 
 		AStarScenarioTest test = new AStarScenarioTest();
