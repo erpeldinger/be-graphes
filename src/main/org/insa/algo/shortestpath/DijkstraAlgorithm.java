@@ -84,9 +84,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
 			//successeurTestes = 0;
 			//iter++;
+			
+			labelCourant = tas.deleteMin();
 
-			labelCourant = tas.findMin();
-			tas.remove(labelCourant);
+			//labelCourant = tas.findMin();
+			//tas.remove(labelCourant);
 			//Notification aux obervateurs que l'on a atteint un noeud pour la premi�re fois
 			notifyNodeReached(labelCourant.getSommet());
 			labelCourant.setMark();
@@ -100,7 +102,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
 			//On parcourt les successeurs y de x
 			for (Arc arcCourant : labelCourant.getSommet().getSuccessors()) {
-				// Small test to check allowed roads...
+				// Test pour verifier que le chemin est autorise
 				if (!data.isAllowed(arcCourant)) {
 					continue;
 				}
@@ -122,10 +124,14 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					listeLabel.set(labelSuccesseur.getSommet().getId(),labelSuccesseur)  ;
 				}
 				
+				double coutSucc = labelSuccesseur.getCost();
+				double coutLabelCourant = labelCourant.getCost();
+				double cout = Math.min(coutSucc, coutLabelCourant + data.getCost(arcCourant));
+				
 				//Si le successeur n'est pas marqu�
 				if (labelSuccesseur.marked() == false) {
-					if (labelSuccesseur.getTotalCost() > (labelCourant.getCost() + data.getCost(arcCourant) 
-					+ (labelSuccesseur.getTotalCost() - labelSuccesseur.getCost()))) {
+					if (cout != coutSucc || (coutSucc == Double.POSITIVE_INFINITY)){
+							
 							
 						/**
 						 * if : labelSuccesseur.getTotalCost() > (labelCourant.getTotalCost() + data.getCost(arcCourant)) 
@@ -137,10 +143,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 						|| (labelSuccesseur.getCost() == Double.POSITIVE_INFINITY)
 						*/
 						
-						labelSuccesseur.setCost(labelCourant.getCost() + data.getCost(arcCourant));
-						labelSuccesseur.setPere(arcCourant);
+						labelSuccesseur.setCost(cout);
+						labelSuccesseur.setPere(labelCourant.getSommet());
 						
-						/**
 						
 						//Si le label est deja dans le tas, on met a jour sa position
 						if (labelSuccesseur.getInTas()) {
@@ -149,14 +154,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 						else {
 							labelSuccesseur.setInTas();
 						}
-						*/
-						
+						/**
 						//on insere un label s'il n'était pas deja dans la liste
 						try {
 							tas.remove(labelSuccesseur);
 						}
 						catch (ElementNotFoundException e){
-						}
+						}*/
 						tas.insert(labelSuccesseur);
 						// sommets visites
 						this.nbSommetsVisites+=1;
@@ -209,7 +213,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			solutionNode.add(aux.getSommet());
 			// on cherche le label associé au noeud pere
 			for (Label l : listeLabel) {
-				if (l.getSommet().equals(aux.getPere().getOrigin())) {
+				if (l.getSommet().equals(aux.getPere())) {
 					aux = l;
 					break;
 				}

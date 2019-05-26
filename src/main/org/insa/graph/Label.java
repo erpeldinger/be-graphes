@@ -12,7 +12,7 @@ public class Label implements Comparable <Label> {
 	protected double cout;
 	
 	//sommet précédent sur le chemin correspondant au plus court chemin 
-	private Arc arcPere;
+	private Node noeudPere;
 	
 	//Variable vraie si le sommet est dans le tas
 	private boolean inTas;
@@ -23,7 +23,7 @@ public class Label implements Comparable <Label> {
 		this.sommetCourant = sc;
 		this.marque = false;
 		this.cout = Integer.MAX_VALUE;
-		this.arcPere = null;
+		this.noeudPere = null;
 		this.inTas = false;
 	}
 	//Méthode
@@ -57,12 +57,12 @@ public class Label implements Comparable <Label> {
 		return this.sommetCourant;
 	}
 	
-	public Arc getPere() {
-		return this.arcPere;
+	public Node getPere() {
+		return this.noeudPere;
 	}
 	
-	public void setPere(Arc p) {
-		this.arcPere = p;
+	public void setPere(Node p) {
+		this.noeudPere = p;
 	}
 	
 	public void setInTas() {
@@ -91,13 +91,19 @@ public class Label implements Comparable <Label> {
 		}
 		return res; */
 
-		int comp;
+		int comp=0;
 
 		if (this.getTotalCost() < l.getTotalCost()) {
 			comp = -1;
 		}
 
 		else if (this.getTotalCost() == l.getTotalCost()) {
+			if(this.cout > l.cout ) {
+				comp = 1;
+			}
+			else if (this.cout < l.cout) {
+				comp = -1;
+			}
 			/**
 			if (this.getBorne() < l.getBorne()) {
 				comp = -1 ;
@@ -112,7 +118,7 @@ public class Label implements Comparable <Label> {
 			comp = 0;
 		}
 
-		else {
+		else if(this.getTotalCost() > l.getTotalCost()){
 			comp = 1;
 		}			
 		return comp;
