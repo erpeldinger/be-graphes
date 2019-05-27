@@ -46,14 +46,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		ArrayList<Label> listeLabel = new ArrayList<Label>();
 		BinaryHeap<Label> tas = new BinaryHeap<Label>();
 		
-		/**
-		//Si les sommets ne sont pas dans le graphe
-		if (data.getOrigin().getId() > this.data.getGraph().getNodes().size()) {
-			solution = new ShortestPathSolution(data, Status.INFEASIBLE);
-			return solution;
-		}
-	*/
-		
 		for (Node courantNode : this.data.getGraph().getNodes()) {
 			listeLabel.add(creerLabel(courantNode, data));
 
