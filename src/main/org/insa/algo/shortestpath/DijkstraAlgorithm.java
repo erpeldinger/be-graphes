@@ -100,6 +100,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				break;
 			}
 
+
 			//On parcourt les successeurs y de x
 			for (Arc arcCourant : labelCourant.getSommet().getSuccessors()) {
 				// Test pour verifier que le chemin est autorise
@@ -183,6 +184,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		//System.out.println("nb arcs " + nbarc);    // NB ARCS : 1262
 		// TESTE SUR LA CARTE INSA : 1349 NODES ET 2887 ARCS
 
+		
+		//Si on arrive à la destination
+		if(!listeLabel.get(data.getDestination().getId()).marked()) {
+			System.out.println("Pas de solution connexe");
+			solution = new ShortestPathSolution(data, Status.INFEASIBLE);
+			return solution;
+		}
 		//Notification de la destination
 		notifyDestinationReached(data.getDestination());
 
