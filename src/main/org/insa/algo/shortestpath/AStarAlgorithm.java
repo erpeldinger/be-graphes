@@ -17,10 +17,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
     public AStarAlgorithm(ShortestPathData data) {
         super(data);
     }    
-    
-    //A corriger, dans DijkstraAlgo il faudrait cr�er cette m�thode comment � on a juste � la red�finir ici pour ne pas r��crire tout l'algo
-    //Ou alors on copie/colle tout comme �a et on modifie "extends ShortestPathAlgorithm : 
-    
+
     @Override
     protected LabelStar creerLabel(Node sc, ShortestPathData data) {
 		return new LabelStar(sc, data);

@@ -22,7 +22,6 @@ public class LabelStar extends Label implements Comparable<Label> {
 			else {
 				vitesseGraph = data.getMaximumSpeed() ;
 			}
-			//double vitesseArc = Math.max(vitesseArc, data.getGraph().getGraphInformation().getMaximumSpeed());
 			//Conversion, distance en m
 			this.borneInf = Point.distance(sc.getPoint(), data.getDestination().getPoint()) / (vitesseMax*1000/3600);
 		}
@@ -34,6 +33,5 @@ public class LabelStar extends Label implements Comparable<Label> {
 	public double getTotalCost() {
 		return this.borneInf + this.cout; //pour l'ordre des sommets dans le tas
 	}
-
 	
 }

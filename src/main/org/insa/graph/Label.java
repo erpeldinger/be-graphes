@@ -74,23 +74,7 @@ public class Label implements Comparable <Label> {
 		
 	}
 
-	/**
-	//Compare les co�ts totaux de deux labels, renvoit -1 si <; 0 si =; 1 si >
 	public int compareTo(Label l) {
-		return Double.compare(this.cout, l.getCost());
-	}
-	*/
-	
-	public int compareTo(Label l) {
-
-
-		/**
-		int res = Double.compare(this.getTotalCost(), ((LabelStar)l).getTotalCost());
-		if(res == 0) {
-			res = Double.compare(this.borneInf, ((LabelStar)l).getBorne());
-		}
-		return res; */
-
 		int comp=0;
 
 		if (this.getTotalCost() < l.getTotalCost()) {
@@ -104,17 +88,6 @@ public class Label implements Comparable <Label> {
 			else if (this.cout < l.cout) {
 				comp = -1;
 			}
-			/**
-			if (this.getBorne() < l.getBorne()) {
-				comp = -1 ;
-			}
-			else if (this.getBorne() > l.getBorne()) {
-				comp = 1;
-			}
-			else {
-				comp = 0;
-			}
-			*/
 			comp = 0;
 		}
 
