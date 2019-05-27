@@ -13,12 +13,12 @@ import org.insa.graph.io.GraphReader;
 /** 
  * Ici, on utilisera la classe PerformanceTest pour lancer
  * plusieurs tests sur diffï¿½rentes cartes
-*/
+ */
 
 public class LaunchTest {
 
 	public static ArrayList<String> dataDirectory;
-	
+
 	public static ArrayList<String> cartes;//cartes et chemin
 
 	public static void initAll() {
@@ -34,12 +34,12 @@ public class LaunchTest {
 		cartes.add(".mapgr");
 	}
 
-	
+
 	public static void lancementTest() {
-		
+
 		GraphReader reader;
 		Graph graph;
-		
+
 		//Dijkstra
 		//Boucle pour le type d'ï¿½valuation (temps, distance)
 		for (int i=0; i<2; i++) {
@@ -50,17 +50,18 @@ public class LaunchTest {
 					graph = reader.read();
 					EcritureDonnees D = new EcritureDonnees(cartes.get(l),i,graph);
 					System.out.println("lancementTest ecriture données ok");
-					EcritureResultats F = new EcritureResultats(D, 0);
+					EcritureResultats F1 = new EcritureResultats(D, 0); //dijkstra
+					EcritureResultats F2= new EcritureResultats(D, 1); //astar
 
 					System.out.println("lancementTest ecriture données et res ok");
 				}
 				catch (Exception e) {}
 			}			
 		}
-		
+
 		//AStar
 		//Boucle pour les cartes
-		for (int l=0; l<cartes.size(); l++) {
+		/*for (int l=0; l<cartes.size(); l++) {
 			try {
 				reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(1) + cartes.get(l) + ".mapgr"))));
 				graph = reader.read();
@@ -69,9 +70,10 @@ public class LaunchTest {
 				EcritureResultats F = new EcritureResultats(D, 1); //modif constructeur
 			}
 			catch (Exception e) {}
-		}			
+		}	
+		 */		
 	}
-	
+
 	public static void main (String args[]) {
 		//main
 		initAll();
@@ -79,6 +81,6 @@ public class LaunchTest {
 		lancementTest();
 		System.out.println("lancementtest fini");
 	}
-	
+
 
 }
