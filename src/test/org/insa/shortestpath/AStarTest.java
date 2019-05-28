@@ -247,7 +247,7 @@ public class AStarTest {
     	
     	
 		System.out.println("/-------------- Tests de scenarios en distance (AStar) --------------/"+"\n");
-		String carte = LaunchTest.dataDirectory.get(3)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
+		String carte = LaunchTest.dataDirectory.get(1)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
 		
 		System.out.println("Carte : " + LaunchTest.cartes.get(1) +" \n");
 		System.out.println("Mode : distance\n");
@@ -284,10 +284,11 @@ public class AStarTest {
 				
 	}
 	
+	@Test
 	public void testDoScenarioTemps() throws Exception {
 
 		System.out.println("/-------------- Tests de scenarios en temps (AStar) --------------/"+"\n");
-		String carte = LaunchTest.dataDirectory.get(3)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
+		String carte = LaunchTest.dataDirectory.get(1)+LaunchTest.cartes.get(1)+ LaunchTest.cartes.get(3);
 		
 		
 		System.out.println("Carte : " + LaunchTest.cartes.get(1)+" \n");
