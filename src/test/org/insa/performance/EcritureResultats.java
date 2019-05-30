@@ -87,7 +87,7 @@ public class EcritureResultats {
 	public void LectureFichier(String nomFichier) {
 		System.out.println("LectureFichier in");
 		try {
-			Scanner sc = new Scanner(new File(LaunchTest.dataDirectory.get(2) + nomFichier));
+			Scanner sc = new Scanner(new File(LaunchTest.dataDirectory.get(5) + nomFichier));
 			int origine, dest;
 			//Recupere le nom de la carte
 			if (sc.hasNext()) {
@@ -160,7 +160,7 @@ public class EcritureResultats {
 		System.out.println("nomfichier " + nomFichierActuel);	
 		nomFichier.add(nomFichierActuel);
 		System.out.println("ajout nomfichier ok");
-		File file = new File(LaunchTest.dataDirectory.get(2) + nomFichierActuel);
+		File file = new File(LaunchTest.dataDirectory.get(4) + nomFichierActuel);
 		// Cr�e le fichier s'il n'existe pas
 		try {
 			if (!file.exists()) {
@@ -196,7 +196,7 @@ public class EcritureResultats {
 				System.out.println("couple orig dest ecrit : " + listeOrigine.get(i) + " - " + listeDest.get(i));
 				
 				//creation des data
-				GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(LaunchTest.dataDirectory.get(1) + nomCarte + ".mapgr"))));
+				GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(LaunchTest.dataDirectory.get(3) + nomCarte + ".mapgr"))));
 				Graph graph = reader.read();
 				ArcInspector arc = ArcInspectorFactory.getAllFilters().get(0);
 				ShortestPathData data = new ShortestPathData(graph, graph.get(listeOrigine.get(i)),graph.get(listeDest.get(i)), arc);
@@ -209,7 +209,7 @@ public class EcritureResultats {
 				    DijkstraAlgorithm Dijkstra = new DijkstraAlgorithm(data);
 				    
 				    debut = System.currentTimeMillis();
-					ShortestPathSolution solutionDijkstra = Dijkstra.run();
+					ShortestPathSolution solutionDijkstra = Dijkstra.doRun();
 					System.out.println("aldo Dijkstra run ok");
 				    total = System.currentTimeMillis() - debut;
 					if (type == 1) {
@@ -255,7 +255,7 @@ public class EcritureResultats {
 				else if (algo == 1) {
 					   AStarAlgorithm AStar = new AStarAlgorithm(data);
 					   debut = System.currentTimeMillis();
-					   ShortestPathSolution solutionAStar = AStar.run();
+					   ShortestPathSolution solutionAStar = AStar.doRun();
 						System.out.println("aldo Astar run ok");
 					   total = System.currentTimeMillis() - debut;
 					   if (type == 1) {

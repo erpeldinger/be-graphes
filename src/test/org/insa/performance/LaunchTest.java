@@ -28,6 +28,8 @@ public class LaunchTest {
 		dataDirectory.add("C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\cartes\\");
 		dataDirectory.add("C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\res\\");
 		dataDirectory.add("C:/Users/clari/Documents/3MIC/S2/graphes/Maps/");
+		dataDirectory.add("C:/Users/clari/Documents/3MIC/S2/graphes/Result/");
+		dataDirectory.add("C:/Users/clari/Documents/3MIC/S2/graphes/Data/");
 		cartes.add("carre-dense");
 		cartes.add("midi-pyrenees");
 		cartes.add("new-zealand");
@@ -46,7 +48,7 @@ public class LaunchTest {
 			//Boucle pour les cartes
 			for (int l=0; l<cartes.size(); l++) {
 				try {
-					reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(1) + cartes.get(l) + ".mapgr"))));
+					reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(3) + cartes.get(l) + ".mapgr"))));
 					graph = reader.read();
 					EcritureDonnees D = new EcritureDonnees(cartes.get(l),i,graph);
 					System.out.println("lancementTest ecriture données ok");

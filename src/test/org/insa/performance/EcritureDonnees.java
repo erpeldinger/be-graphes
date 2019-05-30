@@ -109,7 +109,7 @@ public class EcritureDonnees {
 		else { //temps
 			nomFichier = nomCarte+"_"+ nbPaires +"_temps_data.txt";			
 		}
-		File file = new File(LaunchTest.dataDirectory.get(2) + nomFichier);
+		File file = new File(LaunchTest.dataDirectory.get(5) + nomFichier);
 		// Cr�e le fichier s'il n'existe pas
 		try {
 			if (!file.exists()) {
