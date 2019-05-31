@@ -274,13 +274,21 @@ public class AStarTest {
 		System.out.println("----- Cas : sommets origine et destination inexistants -----");
 		ori = -1;
 		dest = -1;		
-		test.testScenario(carte, mode, ori, dest);
-		
+		test.testScenario(carte, mode, ori, dest);		
 		
 		System.out.println("----- Cas : chemin existant -----");
 		ori = 2;
 		dest = 53;		
 		test.testScenario(carte, mode, ori, dest);
+		
+		/**
+		Pour la Nouvelle Zélande
+		
+		System.out.println("----- Cas : chemin non connexe -----");
+		ori = 2;
+		dest = 89858;		
+		test.testScenario(carte, mode, ori, dest);	
+		*/
 				
 	}
 	
@@ -318,11 +326,19 @@ public class AStarTest {
 		dest = -1;		
 		test.testScenario(carte, mode, ori, dest);
 
-
 		System.out.println("----- Cas : chemin existant -----");
 		ori = 2;
 		dest = 53;		
 		test.testScenario(carte, mode, ori, dest);
+		
+		/**
+		Pour la Nouvelle Zélande
+		
+		System.out.println("----- Cas : chemin non connexe -----");
+		ori = 2;
+		dest = 89858;		
+		test.testScenario(carte, mode, ori, dest);	
+		*/
 
 	}	
 	
