@@ -44,7 +44,6 @@ public class DijkstraScenarioTest {
 	   // Read the graph.
 	   Graph graph;	
 	   
-	   //Je l'ai mis � null sinon il y avait une erreur si on ne rentrait pas dans le else, je ne sais pas si c'est une bonne id�e
 	   ArcInspector arc = null; 
 	   try {
 			graph = reader.read();
@@ -79,7 +78,6 @@ public class DijkstraScenarioTest {
 			   }
 			   //Cr�ation des plus courts chemins
 			   else {
-				   //A voir ?????????????????
 				   ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(dest), arc);
 					
 				   BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
@@ -111,7 +109,6 @@ public class DijkstraScenarioTest {
 					   }
 					   System.out.println("Co�t trajet Dikjstra: " + costDijkstra);
 					   System.out.println("Co�t trajet BF: " + costBF);
-					   // ??? assertEquals(costBF, costDijkstra, 1e6);
 				   }
 			   }
 			   

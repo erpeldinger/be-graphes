@@ -33,7 +33,6 @@ public class AStarScenarioTest {
    @Test
    
    // Type correspond au type d'�valuation. On choisit 1 pour le temps, 0 pour la distance
-   // Remarque : A* ne se fait qu'en distance et pas en temps.
    public void testScenario (String carte, int type, int origine, int dest) throws Exception {
 
 	   // Create a graph reader
@@ -42,7 +41,6 @@ public class AStarScenarioTest {
 	   // Read the graph.
 	   Graph graph;	
 	   
-	   //Je l'ai mis � null sinon il y avait une erreur si on ne rentrait pas dans le else, je ne sais pas si c'est une bonne id�e
 	   ArcInspector arc = null; 
 	   try {
 			graph = reader.read();
@@ -53,7 +51,6 @@ public class AStarScenarioTest {
 		   
 		   //Si l'origine ou la destination ne sont pas dans le graphe
 		   else if((origine<0) || (dest<0) || (origine>graph.size()-1) || (dest>graph.size()-1) ) {
-			   //!(graph.getNodes().contains(origine) || graph.getNodes().contains(dest))) --> non car dest et origine = int   
 	  		   System.out.print("Origine ou destination pas dans le graphe \n");
 	  		   }
 		   

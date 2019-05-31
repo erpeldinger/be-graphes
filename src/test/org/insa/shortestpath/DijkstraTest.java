@@ -45,8 +45,6 @@ public class DijkstraTest {
         for (int i = 0; i < nodes.length; ++i) {
             nodes[i] = new Node(i, null);
         }
-        
-        //ATTENTION CE GRAPHE EST CELUI DE L'EXEMPLE QUI A ETE SUPPRIME, CE N'EST PAS LE MEME QUE DANS PATHTEST
 
         // Add arcs...
         a2b = Node.linkNodes(nodes[0], nodes[1], 10, speed10, null);
@@ -162,87 +160,11 @@ public class DijkstraTest {
 
 	    
     }
-    /**
-    @Test
-    public void testDoRun() {
-    
-     	TEST CORRESPONDANT A L'EXEMPLE AVEC LE TABLEAU (SUPPRIME)
-     * 
-    	//-------------- 1.2 Test comparatif des algo Bellman-Ford et Dijkstra ---------------------------- 
-    	System.out.println("/-------------- 1.2 - Tests de validitï¿½ avec oracle sur un exemple simple --------------/"+"\n");
-    	
-    	//On affiche les points de dï¿½part (colonnes)
-    	for (int i=0; i < nodes.length; i++) {
-    		
-    		System.out.println("x" + (nodes[i].getId()+1) + ":");
-    		
-    		//Affichage des lignes du tableau
-    		for (int j=0;  j < nodes.length; j++) {
-    			
-    			//Si le noeud destinataire est le noeud initial
-    			if(nodes[i]==nodes[j]) {
-					System.out.println("   -   ");
-				}
-    			
-    			else {
-    				//On prend le 1er ArcInspector de la liste
-    				ArcInspector arcInspectorDijkstra = new ArcInspectorFactory().getAllFilters().get(0);
-    				ShortestPathData data = new ShortestPathData(graph, nodes[i],nodes[j], arcInspectorDijkstra);
-    				
-    				//On crï¿½e les deux algorithmes (Bellman-Ford et Dijkstra)
-    				BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
-					DijkstraAlgorithm D = new DijkstraAlgorithm(data);
-					
-    				//On rï¿½cupï¿½re les solutions des algorithmes Bellman-Ford et Dijkstra
-    				ShortestPathSolution solutionDijkstra = D.run();
-					ShortestPathSolution solutionBF = B.run();
-					
-					//Si le chemin est inexistant
-					if (solutionDijkstra.getPath() == null) {
-						assertEquals(solutionBF.getPath(), solutionDijkstra.getPath());
-						System.out.println("\\infty ");
-					}
-					
-					//Sinon, il existe un plus court chemin
-					else {
-						
-						//On calcule le coï¿½t du plus court chemin
-						float costDijkstra = solutionDijkstra.getPath().getLength();
-						float costBF = solutionBF.getPath().getLength();
-						assertEquals(costDijkstra, costBF, 0);
-
-						//On rï¿½cupï¿½re le pï¿½re du sommet de la destionnation
-						List<Arc> listeArcs = solutionDijkstra.getPath().getArcs();
-						Node pereDestination = listeArcs.get(listeArcs.size()-1).getOrigin();
-
-						System.out.println(costDijkstra+ ", (x" + (pereDestination.getId()+1) + ") ");
-					}
-    			}    			
-    		}
-    		// Retour ï¿½ la ligne
-			//System.out.println();
-    	}
-    	// Retour ï¿½ la ligne 
-		//System.out.println();
-    } */
-    
     //---------------------------- 2.1 Test des scï¿½narios avec oracle ------------------------------------------------------
 
     @Test
     public void testDoScenarioDistance() throws Exception {
     	LaunchTest.initAll();
-    	
-    	/**RAPPEL
-    	 * dataDirectory = {"/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/")
-							"C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\cartes\\")
-							"C:\\Users\\Cerise\\Documents\\insa\\cours\\A3\\S2\\be_graphe\\res\\")
-							"C:/Users/clari/Documents/3MIC/S2/graphes/Maps"};
-		 * 
-		 * cartes = {"carre-dense"
-					 "midi-pyrenees"
-					 "new-zealand"
-					 ".mapgr"};
-    	 */
     	
     	
 		System.out.println("/-------------- Tests de scenarios en distance (Dijkstra) --------------/"+"\n");
@@ -280,16 +202,6 @@ public class DijkstraTest {
 		dest = 53;		
 		test.testScenario(carte, mode, ori, dest);
 		
-		/**
-		Pour la Nouvelle Zélande
-		
-		System.out.println("----- Cas : chemin non connexe -----");
-		ori = 2;
-		dest = 89858;		
-		test.testScenario(carte, mode, ori, dest);	
-		*/
-		
-
 				
 	}
 	
@@ -334,14 +246,6 @@ public class DijkstraTest {
 		dest = 53;		
 		test.testScenario(carte, mode, ori, dest);
 		
-		/**
-		Pour la Nouvelle Zélande
-		
-		System.out.println("----- Cas : chemin non connexe -----");
-		ori = 2;
-		dest = 89858;		
-		test.testScenario(carte, mode, ori, dest);	
-		*/
 	}
 	
 	

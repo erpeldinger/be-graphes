@@ -51,37 +51,17 @@ public class LaunchTest {
 					reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(3) + cartes.get(l) + ".mapgr"))));
 					graph = reader.read();
 					EcritureDonnees D = new EcritureDonnees(cartes.get(l),i,graph);
-					System.out.println("lancementTest ecriture données ok");
-					EcritureResultats F1 = new EcritureResultats(D, 0); //dijkstra
-					EcritureResultats F2= new EcritureResultats(D, 1); //astar
-
-					System.out.println("lancementTest ecriture données et res ok");
+					EcritureResultats F1 = new EcritureResultats(D, 0);
+					EcritureResultats F2= new EcritureResultats(D, 1);
 				}
 				catch (Exception e) {}
 			}			
 		}
-
-		//AStar
-		//Boucle pour les cartes
-		/*for (int l=0; l<cartes.size(); l++) {
-			try {
-				reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(dataDirectory.get(1) + cartes.get(l) + ".mapgr"))));
-				graph = reader.read();
-				EcritureDonnees D = new EcritureDonnees(cartes.get(l),0,graph);
-				//EcritureResultats F = new EcritureResultats(cartes.get(l), 0, 1);
-				EcritureResultats F = new EcritureResultats(D, 1); //modif constructeur
-			}
-			catch (Exception e) {}
-		}	
-		 */		
 	}
 
 	public static void main (String args[]) {
-		//main
 		initAll();
-		System.out.println("init fini");
 		lancementTest();
-		System.out.println("lancementtest fini");
 	}
 
 

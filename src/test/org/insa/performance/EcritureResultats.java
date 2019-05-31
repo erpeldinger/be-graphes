@@ -85,36 +85,30 @@ public class EcritureResultats {
 	
 	//LECTURE fichier donnees
 	public void LectureFichier(String nomFichier) {
-		System.out.println("LectureFichier in");
 		try {
 			Scanner sc = new Scanner(new File(LaunchTest.dataDirectory.get(5) + nomFichier));
 			int origine, dest;
 			//Recupere le nom de la carte
 			if (sc.hasNext()) {
-				this.nomCarte = sc.nextLine();	
-				System.out.println("lectureFichier nomcarte ok " + nomCarte);			
+				this.nomCarte = sc.nextLine();			
 			}
 			//Recupere le type d'ï¿½valuation
 			if (sc.hasNextInt()) {
-				this.type = sc.nextInt();	
-				System.out.println("lectureFichier type eval ok " + type);			
+				this.type = sc.nextInt();		
 			}
 			//Recupere le nombre de paires
 			if (sc.hasNextInt()) {
-				this.nbPairesDonnees = sc.nextInt();	
-				System.out.println("lectureFichier nombre paires ok " + type);			
+				this.nbPairesDonnees = sc.nextInt();				
 			}
 			//Recupere les paires de sommets (boucle usque fin du fichier)
 			while(sc.hasNextInt()) {
 				//recuperation du sommet origine
 				origine = sc.nextInt();
 				this.listeOrigine.add(origine);
-				System.out.println("liste origine ok : " + listeOrigine);
 				//Recuperation du  dest
 				if (sc.hasNextInt()) {
 					dest = sc.nextInt();
 					this.listeDest.add(dest);
-					System.out.println("liste dest ok : " + listeDest);
 				}
 			}
 			sc.close();
@@ -129,7 +123,6 @@ public class EcritureResultats {
 	// ECRITURE fichier resultat
 	public void EcritureCalculs(String nomCarte, int type, int algo) {
 
-		System.out.println("Calculs in");
 		//Si le type et l'algo ne sont pa bons
 		if(!((type==0 || type==1) && (algo==0 || algo==1))) {
 			   System.out.print("Type d'ï¿½valutation etou d'algorithme invalides \n");
@@ -137,10 +130,10 @@ public class EcritureResultats {
 		
 		String nomAlgo = "", nomEval="";
 
-		if (type == 0) { //distance
+		if (type == 0) {
 			nomEval = "distance";
 		}
-		else if (type == 1) {//temps
+		else if (type == 1) {
 			nomEval = "temps";
 		} 
 		if(algo == 0) {
@@ -150,41 +143,34 @@ public class EcritureResultats {
 			nomAlgo = "aStar";
 		}
 
-		System.out.println("Creation fichier avant for ok");
 		
 		
 		// Entete du fichier
 		
 		String nomFichierActuel = "";
-		nomFichierActuel+= nomCarte+"_"+ nomEval + "_" + EcritureDonnees.nbPaires + "_" +nomAlgo+".txt";
-		System.out.println("nomfichier " + nomFichierActuel);	
+		nomFichierActuel+= nomCarte+"_"+ nomEval + "_" + EcritureDonnees.nbPaires + "_" +nomAlgo+".txt";	
 		nomFichier.add(nomFichierActuel);
-		System.out.println("ajout nomfichier ok");
 		File file = new File(LaunchTest.dataDirectory.get(4) + nomFichierActuel);
 		// Crï¿½e le fichier s'il n'existe pas
 		try {
 			if (!file.exists()) {
 				file.createNewFile();
-			}
-			System.out.println("Creation fichier ok");
+			};
 			
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			//Ecrit le nom de la carte et le nombre de paires
 			bw.write(nomCarte);
-			System.out.println("carte ecrite : " + nomCarte);
 			bw.newLine();	
 			bw.write(nomEval);
-			System.out.println("type ecrit : " + type);
 			bw.newLine();
 			bw.write(Integer.toString(EcritureDonnees.nbPaires));	
-			System.out.println("nbpaires ecrites : " + EcritureDonnees.nbPaires);
 			bw.newLine();
 			bw.write(nomAlgo);	
 			bw.newLine();
 		
-		//Données pour chaque paires
+		//Donnï¿½es pour chaque paires
 			
 			for (int i=0; i<EcritureDonnees.nbPaires; i++) {
 			//Ecrit les donnees sur la paire origine/destination correspondante
@@ -193,7 +179,6 @@ public class EcritureResultats {
 				bw.write(";");
 				bw.write(Integer.toString(listeDest.get(i)));
 				bw.write(";");
-				System.out.println("couple orig dest ecrit : " + listeOrigine.get(i) + " - " + listeDest.get(i));
 				
 				//creation des data
 				GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(LaunchTest.dataDirectory.get(3) + nomCarte + ".mapgr"))));
@@ -202,7 +187,6 @@ public class EcritureResultats {
 				ShortestPathData data = new ShortestPathData(graph, graph.get(listeOrigine.get(i)),graph.get(listeDest.get(i)), arc);
 				long debut, total;
 				double cost;
-				System.out.println("data créées");
 				
 				//Si c'est Dijsktra
 				if (algo == 0) {
@@ -210,7 +194,6 @@ public class EcritureResultats {
 				    
 				    debut = System.currentTimeMillis();
 					ShortestPathSolution solutionDijkstra = Dijkstra.doRun();
-					System.out.println("aldo Dijkstra run ok");
 				    total = System.currentTimeMillis() - debut;
 					if (type == 1) {
 						cost = solutionDijkstra.getPath().getMinimumTravelTime();;
@@ -224,30 +207,24 @@ public class EcritureResultats {
 					//valeur solution
 					bw.write(Integer.toString((int)cost));
 					bw.write(";");
-					System.out.println("valeur solution ecrite : " + (int)cost);
 					
 					//temps cpu
 					bw.write(Integer.toString((int)total));
 					bw.write(";");
-					System.out.println("temps cpu ecrit : " + (int)total);
 					
 					//nb sommets explorÃ©s
 
 					bw.write(Integer.toString(Dijkstra.getSomVisites()));
 					bw.write(";");
-					System.out.println("nb sommet explorés ecrit : " + Dijkstra.getSomVisites());
 					
 					//nb sommets marquÃ©s
 
 					bw.write(Integer.toString(Dijkstra.getSomMarques()));
 					bw.write(";");
-					System.out.println("nb sommet marqués ecrit : " + Dijkstra.getSomMarques());
 					
 					//taille max du tas
 					bw.write(Integer.toString(Dijkstra.getTailleTas()));
 					bw.write(";");
-					System.out.println("taille max tas ecrit : " + Dijkstra.getTailleTas());
-				
 					bw.newLine();	
 				}
 				
@@ -256,7 +233,6 @@ public class EcritureResultats {
 					   AStarAlgorithm AStar = new AStarAlgorithm(data);
 					   debut = System.currentTimeMillis();
 					   ShortestPathSolution solutionAStar = AStar.doRun();
-						System.out.println("aldo Astar run ok");
 					   total = System.currentTimeMillis() - debut;
 					   if (type == 1) {
 						   cost= solutionAStar.getPath().getMinimumTravelTime();

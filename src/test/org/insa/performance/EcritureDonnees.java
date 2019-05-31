@@ -79,29 +79,11 @@ public class EcritureDonnees {
 		for (int i=0; i<nbPaires ; i++) {
 			origine = rand.nextInt(graph.getNodes().size());
 			dest = rand.nextInt(graph.getNodes().size());
-			//nouveauChemin.add(listeNode.get(origine));
-			//nouveauChemin.add(listeNode.get(dest));
-			
-			//test sans verif --ici ça ne marche plus
 			this.listeOrigine.add(origine);
 			this.listeDest.add(dest);
 			
-			/*chemin = Path.createShortestPathFromNodes(graph, nouveauChemin);
-			
-			//Si le chemin existe, on ajoute les sommets ï¿½ la liste
-			if (chemin.isValid()) {
-				listeOrigine.add(origine);
-				listeDest.add(dest);
-			}
-			else {
-				i--;
-			}
-			*/
-			//nouveauChemin.clear();
 			
 		}
-
-		System.out.println("fin for " + listeOrigine);
 		
 		if (type ==0) { //distance
 			nomFichier = nomCarte+"_"+ nbPaires +"_distance_data.txt";			
@@ -123,10 +105,8 @@ public class EcritureDonnees {
 			bw.write(nomCarte);
 			bw.newLine();	
 			bw.write(Integer.toString(type));
-			System.out.println("type ecrit: " + type);
 			bw.newLine();
 			bw.write(Integer.toString(nbPaires));	
-			System.out.println(" nbpaires ecrites : " + nbPaires);
 			bw.newLine();
 			
 			//Ecrit les paires de sommets
@@ -144,9 +124,6 @@ public class EcritureDonnees {
 			System.out.println(e.getMessage());
 		}
 	
-		//Calcule le temps d'exï¿½cution du CPU
-		//long calculCPU = System.currentTimeMillis()-init ;
-		
 	}
 	
 	
