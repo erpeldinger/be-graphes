@@ -42,24 +42,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		ShortestPathSolution solution = null;
 
 		//Initialisation
-		int indexDest = 0, iter = 0;
-		ArrayList<Label> listeLabel = new ArrayList<Label>();
+		Label[] listeLabel = new Label[this.data.getGraph().size()];
 		BinaryHeap<Label> tas = new BinaryHeap<Label>();
 		
-		for (Node courantNode : this.data.getGraph().getNodes()) {
-			listeLabel.add(creerLabel(courantNode, data));
-
-			//On recupere l'index du label du noeud de destination
-			if(listeLabel.get(iter).getSommet() == data.getDestination()) {
-				indexDest = iter;
-			}
-			iter++;
-
-			if (courantNode.equals(data.getOrigin())) {
-				listeLabel.get(listeLabel.size() - 1).setCost(0);
-				tas.insert(listeLabel.get(listeLabel.size() - 1 ));
-			}
-		}
+		Label labelDebut = creerLabel(data.getOrigin(), data);
+		Label labelFin = creerLabel(data.getDestination(), data);
+		labelDebut.setCost(0);
+		tas.insert(labelDebut) ;
+		listeLabel[data.getOrigin().getId()] = labelDebut ;
+		listeLabel[data.getDestination().getId()] = labelFin ;
+		Arc[] predecessorArcs = new Arc[this.data.getGraph().size()];
+		
 
 		Label labelCourant = creerLabel();
 		Label labelSuccesseur = creerLabel();
@@ -89,14 +82,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				if (!data.isAllowed(arcCourant)) {
 					continue;
 				}
-
-				labelSuccesseur = listeLabel.get(arcCourant.getDestination().getId());
+				Node nodeSuccesseur = arcCourant.getDestination();
+				int idSucesseur = nodeSuccesseur.getId();
+				labelSuccesseur = listeLabel[idSucesseur];
 
 				//Si le label n'existe pas, on le crée
 				if(labelSuccesseur == null) {
-					notifyDestinationReached(arcCourant.getDestination());
-					labelSuccesseur = creerLabel(arcCourant.getDestination(), data);
-					listeLabel.set(labelSuccesseur.getSommet().getId(),labelSuccesseur)  ;
+					notifyDestinationReached(nodeSuccesseur);
+					labelSuccesseur = creerLabel(nodeSuccesseur, data);
+					listeLabel[labelSuccesseur.getSommet().getId()] = labelSuccesseur ;
 				}
 
 				double coutSucc = labelSuccesseur.getCost();
@@ -118,6 +112,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 						}
 
 						tas.insert(labelSuccesseur);
+						predecessorArcs[arcCourant.getDestination().getId()] = arcCourant;
+						
 						// sommets visites
 						this.nbSommetsVisites+=1;
 						// taille max tas
@@ -128,6 +124,38 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				}
 			}
 		}
+		 //ShortestPathSolution solution = null;
+
+        // Destination has no predecessor, the solution is infeasible...
+        if (predecessorArcs[data.getDestination().getId()] == null) {
+            solution = new ShortestPathSolution(data, Status.INFEASIBLE);
+        }
+        else {
+
+            // The destination has been found, notify the observers.
+            notifyDestinationReached(data.getDestination());
+
+            // Create the path from the array of predecessors...
+            ArrayList<Arc> arcs = new ArrayList<>();
+            Arc arc = predecessorArcs[data.getDestination().getId()];
+            while (arc != null) {
+                arcs.add(arc);
+                arc = predecessorArcs[arc.getOrigin().getId()];
+            }
+
+            // Reverse the path...
+            Collections.reverse(arcs);
+
+            // Create the final solution.
+            solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(this.data.getGraph(), arcs));
+        }
+
+        return solution;
+	
+		
+		
+		/**
+		
 
 		//Si on n'arrive pas à la destination
 		if(!listeLabel.get(data.getDestination().getId()).marked()) {
@@ -176,5 +204,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		solution = new ShortestPathSolution(data, Status.OPTIMAL, p);
 
 		return solution;
+		*/
 	}
 }
